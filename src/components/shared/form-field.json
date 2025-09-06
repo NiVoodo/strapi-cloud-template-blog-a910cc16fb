@@ -1,0 +1,12 @@
+{
+"collectionName": "components_shared_form_fields",
+"info": { "displayName": "form-field" },
+"attributes": {
+"name": { "type": "string" },
+"label": { "type": "string" },
+"type": { "type": "enumeration", "enum": ["text","email","tel","select","textarea"] },
+"required": { "type": "boolean" },
+"placeholder": { "type": "string" },
+"options": { "type": "json" }
+}
+}

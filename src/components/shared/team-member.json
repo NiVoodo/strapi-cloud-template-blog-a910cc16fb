@@ -1,0 +1,1 @@
+{ "collectionName": "components_shared_team_members", "info": { "displayName": "team-member" }, "attributes": { "name": { "type": "string" }, "role": { "type": "string" }, "initials": { "type": "string" } } }

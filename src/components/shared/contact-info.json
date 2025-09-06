@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_contact_infos",
+  "info": { "displayName": "contact-info" },
+  "attributes": {
+    "address": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.address"
+    },
+    "phone": { "type": "string" },
+    "email": { "type": "email" },
+    "openingHours": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.opening-hour"
+    }
+  }
+}

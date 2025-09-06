@@ -1,0 +1,1 @@
+{ "collectionName": "components_shared_addresses", "info": { "displayName": "address" }, "attributes": { "street": { "type": "string" }, "postalCode": { "type": "string" }, "city": { "type": "string" }, "country": { "type": "string" } } }

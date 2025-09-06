@@ -1,0 +1,9 @@
+{
+"collectionName": "components_shared_features",
+"info": { "displayName": "feature" },
+"attributes": {
+"icon": { "type": "enumeration", "enum": ["ring","quality","heart","consultation","engraving","design","repair","custom"] },
+"title": { "type": "string" },
+"description": { "type": "text" }
+}
+}

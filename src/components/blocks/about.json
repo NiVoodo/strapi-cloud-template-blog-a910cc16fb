@@ -1,0 +1,11 @@
+{
+"collectionName": "components_blocks_abouts",
+"info": { "displayName": "about" },
+"attributes": {
+"title": { "type": "string", "required": true },
+"content": { "type": "richtext" },
+"stats": { "type": "component", "repeatable": true, "component": "shared.stat" },
+"features": { "type": "component", "repeatable": true, "component": "shared.bullet" },
+"teamMembers": { "type": "component", "repeatable": true, "component": "shared.team-member" }
+}
+}

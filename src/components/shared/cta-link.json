@@ -1,0 +1,1 @@
+{ "collectionName": "components_shared_cta_links", "info": { "displayName": "cta-link" }, "attributes": { "text": { "type": "string" }, "href": { "type": "string" } } }

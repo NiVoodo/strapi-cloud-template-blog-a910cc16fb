@@ -1,0 +1,10 @@
+{
+"collectionName": "components_blocks_services",
+"info": { "displayName": "services" },
+"attributes": {
+"title": { "type": "string", "required": true },
+"subtitle": { "type": "text" },
+"services": { "type": "component", "repeatable": true, "component": "shared.service" },
+"cta": { "type": "component", "repeatable": false, "component": "shared.cta" }
+}
+}

@@ -1,0 +1,11 @@
+{
+"kind": "singleType",
+"collectionName": "headers",
+"info": { "singularName": "header", "pluralName": "headers", "displayName": "Header" },
+"options": { "draftAndPublish": true },
+"attributes": {
+"logo": { "type": "string" },
+"navigation": { "type": "component", "repeatable": true, "component": "shared.nav-item" },
+"ctaButton": { "type": "component", "repeatable": false, "component": "shared.cta-link" }
+}
+}

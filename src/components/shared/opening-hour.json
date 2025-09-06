@@ -1,0 +1,1 @@
+{ "collectionName": "components_shared_opening_hours", "info": { "displayName": "opening-hour" }, "attributes": { "day": { "type": "string" }, "hours": { "type": "string" }, "isClosed": { "type": "boolean" } } }

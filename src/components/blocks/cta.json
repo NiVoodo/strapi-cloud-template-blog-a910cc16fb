@@ -1,0 +1,10 @@
+{
+"collectionName": "components_blocks_ctas",
+"info": { "displayName": "cta" },
+"attributes": {
+"title": { "type": "string" },
+"description": { "type": "text" },
+"buttonText": { "type": "string" },
+"buttonLink": { "type": "string" }
+}
+}

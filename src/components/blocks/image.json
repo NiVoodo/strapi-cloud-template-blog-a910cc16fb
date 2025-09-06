@@ -1,0 +1,9 @@
+{
+"collectionName": "components_blocks_images",
+"info": { "displayName": "image" },
+"attributes": {
+"image": { "type": "media", "multiple": false, "required": true },
+"altText": { "type": "string" },
+"caption": { "type": "string" }
+}
+}

@@ -1,0 +1,1 @@
+{ "collectionName": "components_shared_categories", "info": { "displayName": "category" }, "attributes": { "name": { "type": "string" }, "slug": { "type": "string" } } }

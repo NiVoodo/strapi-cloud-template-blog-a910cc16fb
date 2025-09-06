@@ -1,0 +1,1 @@
+{ "collectionName": "components_shared_cta", "info": { "displayName": "cta" }, "attributes": { "title": { "type": "string" }, "description": { "type": "text" }, "buttonText": { "type": "string" }, "buttonLink": { "type": "string" } } }

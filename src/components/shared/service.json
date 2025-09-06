@@ -1,0 +1,10 @@
+{
+"collectionName": "components_shared_services",
+"info": { "displayName": "service" },
+"attributes": {
+"icon": { "type": "enumeration", "enum": ["design","consultation","engraving","repair","custom"] },
+"title": { "type": "string" },
+"description": { "type": "text" },
+"features": { "type": "component", "repeatable": true, "component": "shared.bullet" }
+}
+}

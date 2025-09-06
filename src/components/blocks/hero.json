@@ -1,0 +1,16 @@
+{
+"collectionName": "components_blocks_heros",
+"info": { "displayName": "hero" },
+"attributes": {
+"title": { "type": "string", "required": true },
+"subtitle": { "type": "text" },
+"badge": { "type": "string" },
+"primaryButtonText": { "type": "string" },
+"primaryButtonLink": { "type": "string" },
+"secondaryButtonText": { "type": "string" },
+"secondaryButtonLink": { "type": "string" },
+"backgroundImage": { "type": "media", "multiple": false, "required": false },
+"stats": { "type": "component", "repeatable": true, "component": "shared.stat" },
+"features": { "type": "component", "repeatable": true, "component": "shared.feature" }
+}
+}

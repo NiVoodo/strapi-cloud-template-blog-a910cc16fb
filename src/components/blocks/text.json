@@ -1,0 +1,8 @@
+{
+"collectionName": "components_blocks_texts",
+"info": { "displayName": "text" },
+"attributes": {
+"title": { "type": "string" },
+"body": { "type": "richtext" }
+}
+}

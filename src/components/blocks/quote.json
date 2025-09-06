@@ -1,0 +1,9 @@
+{
+"collectionName": "components_blocks_quotes",
+"info": { "displayName": "quote" },
+"attributes": {
+"quote": { "type": "text", "required": true },
+"author": { "type": "string" },
+"role": { "type": "string" }
+}
+}

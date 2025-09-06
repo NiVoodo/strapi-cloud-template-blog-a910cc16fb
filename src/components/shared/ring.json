@@ -1,0 +1,1 @@
+{ "collectionName": "components_shared_rings", "info": { "displayName": "ring" }, "attributes": { "title": { "type": "string" }, "description": { "type": "text" }, "category": { "type": "string" } } }

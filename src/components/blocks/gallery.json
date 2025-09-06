@@ -1,0 +1,11 @@
+{
+"collectionName": "components_blocks_galleries",
+"info": { "displayName": "gallery" },
+"attributes": {
+"title": { "type": "string", "required": true },
+"subtitle": { "type": "text" },
+"categories": { "type": "component", "repeatable": true, "component": "shared.category" },
+"rings": { "type": "component", "repeatable": true, "component": "shared.ring" },
+"cta": { "type": "component", "repeatable": false, "component": "shared.dual-cta" }
+}
+}

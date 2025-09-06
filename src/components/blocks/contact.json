@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_blocks_contacts",
+  "info": { "displayName": "contact" },
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "subtitle": { "type": "text" },
+    "contactInfo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.contact-info"
+    },
+    "socialMedia": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.social-link"
+    },
+    "formFields": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.form-field"
+    }
+  }
+}

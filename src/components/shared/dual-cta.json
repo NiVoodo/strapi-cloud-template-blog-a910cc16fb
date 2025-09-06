@@ -1,0 +1,1 @@
+{ "collectionName": "components_shared_dual_ctas", "info": { "displayName": "dual-cta" }, "attributes": { "title": { "type": "string" }, "description": { "type": "text" }, "primaryButtonText": { "type": "string" }, "primaryButtonLink": { "type": "string" }, "secondaryButtonText": { "type": "string" }, "secondaryButtonLink": { "type": "string" } } }
