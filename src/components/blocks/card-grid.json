@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_blocks_card_grids",
+  "info": { "displayName": "Card Grid", "description": "Grid of cards with optional title" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "subtitle": { "type": "string" },
+    "columns": { "type": "integer", "default": 3, "min": 2, "max": 4 },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "blocks.card-item",
+      "required": true
+    }
+  }
+}

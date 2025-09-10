@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_blocks_media_texts",
+  "info": { "displayName": "Media & Text", "description": "Image/Video beside text and CTAs" },
+  "options": {},
+  "attributes": {
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images", "videos"]
+    },
+    "mediaPosition": {
+      "type": "enumeration",
+      "enum": ["left", "right"],
+      "default": "left"
+    },
+    "title": { "type": "string" },
+    "richText": { "type": "richtext" },
+    "buttons": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.button"
+    }
+  }
+}

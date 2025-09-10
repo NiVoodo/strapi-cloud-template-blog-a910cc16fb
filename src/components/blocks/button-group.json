@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_blocks_button_groups",
+  "info": { "displayName": "Button Group", "description": "A row of buttons with alignment" },
+  "options": {},
+  "attributes": {
+    "align": {
+      "type": "enumeration",
+      "enum": ["left", "center", "right"],
+      "default": "left"
+    },
+    "buttons": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.button",
+      "required": true
+    }
+  }
+}

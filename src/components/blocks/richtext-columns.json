@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_blocks_richtext_columns",
+  "info": {
+    "displayName": "Richtext Columns",
+    "description": "Mehrspaltiger Richtext mit wählbaren Spaltenbreiten",
+    "icon": "layer-group"
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "columns": {
+      "type": "component",
+      "component": "blocks.richtext-column",
+      "repeatable": true,
+      "required": true
+    },
+    "gap": {
+      "type": "enumeration",
+      "default": "md",
+      "enum": [
+        "sm",
+        "md",
+        "lg",
+        "xl"
+      ]
+    },
+    "backgorund": {
+      "type": "boolean"
+    }
+  }
+}

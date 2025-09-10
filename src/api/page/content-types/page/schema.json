@@ -16,9 +16,13 @@
 "blocks.gallery",
 "blocks.contact",
 "blocks.image",
+"blocks.card-grid",
 "blocks.quote",
 "blocks.text",
-"blocks.cta"
+"blocks.button-group",
+"blocks.richtext-columns",
+"blocks.cta",
+"blocks.media-text"
 ]
 }
 }

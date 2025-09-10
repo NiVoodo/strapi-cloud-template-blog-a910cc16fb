@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_blocks_card_items",
+  "info": { "displayName": "Card Item", "description": "Single card for Card Grid" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "description": { "type": "text" },
+    "media": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "href": { "type": "string" },
+    "badge": { "type": "string" }
+  }
+}

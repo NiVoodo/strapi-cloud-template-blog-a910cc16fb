@@ -587,9 +587,13 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.gallery',
         'blocks.contact',
         'blocks.image',
+        'blocks.card-grid',
         'blocks.quote',
         'blocks.text',
+        'blocks.button-group',
+        'blocks.richtext-columns',
         'blocks.cta',
+        'blocks.media-text',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;

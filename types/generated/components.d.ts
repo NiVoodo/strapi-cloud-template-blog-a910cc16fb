@@ -14,6 +14,58 @@ export interface BlocksAbout extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksButtonGroup extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_button_groups';
+  info: {
+    description: 'A row of buttons with alignment';
+    displayName: 'Button Group';
+  };
+  attributes: {
+    align: Schema.Attribute.Enumeration<['left', 'center', 'right']> &
+      Schema.Attribute.DefaultTo<'left'>;
+    buttons: Schema.Attribute.Component<'shared.button', true> &
+      Schema.Attribute.Required;
+  };
+}
+
+export interface BlocksCardGrid extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_card_grids';
+  info: {
+    description: 'Grid of cards with optional title';
+    displayName: 'Card Grid';
+  };
+  attributes: {
+    columns: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 4;
+          min: 2;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<3>;
+    items: Schema.Attribute.Component<'blocks.card-item', true> &
+      Schema.Attribute.Required;
+    subtitle: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface BlocksCardItem extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_card_items';
+  info: {
+    description: 'Single card for Card Grid';
+    displayName: 'Card Item';
+  };
+  attributes: {
+    badge: Schema.Attribute.String;
+    description: Schema.Attribute.Text;
+    href: Schema.Attribute.String;
+    media: Schema.Attribute.Media<'images'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface BlocksContact extends Struct.ComponentSchema {
   collectionName: 'components_blocks_contacts';
   info: {
@@ -86,6 +138,22 @@ export interface BlocksImage extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksMediaText extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_media_texts';
+  info: {
+    description: 'Image/Video beside text and CTAs';
+    displayName: 'Media & Text';
+  };
+  attributes: {
+    buttons: Schema.Attribute.Component<'shared.button', true>;
+    media: Schema.Attribute.Media<'images' | 'videos'>;
+    mediaPosition: Schema.Attribute.Enumeration<['left', 'right']> &
+      Schema.Attribute.DefaultTo<'left'>;
+    richText: Schema.Attribute.RichText;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface BlocksQuote extends Struct.ComponentSchema {
   collectionName: 'components_blocks_quotes';
   info: {
@@ -95,6 +163,40 @@ export interface BlocksQuote extends Struct.ComponentSchema {
     author: Schema.Attribute.String;
     quote: Schema.Attribute.Text & Schema.Attribute.Required;
     role: Schema.Attribute.String;
+  };
+}
+
+export interface BlocksRichtextColumn extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_richtext_column';
+  info: {
+    description: 'Einzelne Spalte mit Breite & Inhalt';
+    displayName: 'Richtext Column';
+    icon: 'columns';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText & Schema.Attribute.DefaultTo<''>;
+    width: Schema.Attribute.Enumeration<
+      ['1/6', '1/4', '1/3', '1/2', '2/3', '3/4', '5/6', '1']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'1/2'>;
+  };
+}
+
+export interface BlocksRichtextColumns extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_richtext_columns';
+  info: {
+    description: 'Mehrspaltiger Richtext mit w\u00E4hlbaren Spaltenbreiten';
+    displayName: 'Richtext Columns';
+    icon: 'layer-group';
+  };
+  attributes: {
+    backgorund: Schema.Attribute.Boolean;
+    columns: Schema.Attribute.Component<'blocks.richtext-column', true> &
+      Schema.Attribute.Required;
+    gap: Schema.Attribute.Enumeration<['sm', 'md', 'lg', 'xl']> &
+      Schema.Attribute.DefaultTo<'md'>;
+    title: Schema.Attribute.String;
   };
 }
 
@@ -142,6 +244,27 @@ export interface SharedBullet extends Struct.ComponentSchema {
   };
   attributes: {
     text: Schema.Attribute.String;
+  };
+}
+
+export interface SharedButton extends Struct.ComponentSchema {
+  collectionName: 'components_shared_buttons';
+  info: {
+    description: 'Reusable CTA button';
+    displayName: 'Button';
+  };
+  attributes: {
+    ariaLabel: Schema.Attribute.String;
+    href: Schema.Attribute.String & Schema.Attribute.Required;
+    icon: Schema.Attribute.String;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    newTab: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    size: Schema.Attribute.Enumeration<['sm', 'default', 'lg', 'icon']> &
+      Schema.Attribute.DefaultTo<'default'>;
+    variant: Schema.Attribute.Enumeration<
+      ['default', 'secondary', 'outline', 'ghost', 'link']
+    > &
+      Schema.Attribute.DefaultTo<'default'>;
   };
 }
 
@@ -402,16 +525,23 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'blocks.about': BlocksAbout;
+      'blocks.button-group': BlocksButtonGroup;
+      'blocks.card-grid': BlocksCardGrid;
+      'blocks.card-item': BlocksCardItem;
       'blocks.contact': BlocksContact;
       'blocks.cta': BlocksCta;
       'blocks.gallery': BlocksGallery;
       'blocks.hero': BlocksHero;
       'blocks.image': BlocksImage;
+      'blocks.media-text': BlocksMediaText;
       'blocks.quote': BlocksQuote;
+      'blocks.richtext-column': BlocksRichtextColumn;
+      'blocks.richtext-columns': BlocksRichtextColumns;
       'blocks.services': BlocksServices;
       'blocks.text': BlocksText;
       'shared.address': SharedAddress;
       'shared.bullet': SharedBullet;
+      'shared.button': SharedButton;
       'shared.category': SharedCategory;
       'shared.contact-info': SharedContactInfo;
       'shared.cta': SharedCta;
