@@ -1,9 +1,13 @@
-// src/api/page/controllers/page.js
 'use strict';
 
 /**
  * Dynamischer Deep-Populate-Controller für Strapi v5 (CommonJS).
- * Endpunkt: GET /api/pages/by-slug/:slug?status=published|draft&depth=4
+ * Bestehender Endpunkt bleibt unverändert:
+ *   GET /api/pages/by-slug/:slug?status=published|draft&depth=4
+ *
+ * NEU:
+ *   GET /api/pages/public?status=published|draft&page=1&pageSize=100
+ *     -> { data: [{ slug, updatedAt } ...] }
  */
 
 const { factories } = require('@strapi/strapi');
@@ -128,6 +132,8 @@ function buildPopulateForContentType(strapi, ctUid, options = {}) {
 }
 
 module.exports = factories.createCoreController('api::page.page', ({ strapi }) => ({
+
+  // ==== UNVERÄNDERT: deine bestehende bySlug-Action ====
   async bySlug(ctx) {
     const { slug } = ctx.params;
     if (!slug) return ctx.badRequest('Missing slug');
@@ -157,4 +163,38 @@ module.exports = factories.createCoreController('api::page.page', ({ strapi }) =
     if (!page) return ctx.notFound('Page not found');
     ctx.body = page;
   },
+
+  // ==== NEU: leichte Liste für Sitemap etc. ====
+  async publicList(ctx) {
+    try {
+      const status = ctx.query.status === 'draft' ? 'draft' : 'published';
+      const page = Number(ctx.query.page) || 1;
+      const pageSize = Number(ctx.query.pageSize) || 100;
+
+      // Nur die Felder, die wir brauchen
+      const result = await strapi.documents('api::page.page').findMany({
+        status,
+        fields: ['slug', 'updatedAt'],
+        filters: { slug: { $notNull: true } },
+        sort: { updatedAt: 'desc' },
+        page,
+        pageSize,
+      });
+
+      // documents().findMany liefert { results, pagination } in v5
+      const items = Array.isArray(result?.results) ? result.results : result || [];
+
+      const data = items.map((e) => ({
+        slug: e.slug,
+        updatedAt: e.updatedAt,
+      }));
+
+      ctx.body = { data };
+    } catch (err) {
+      strapi.log.error('page.publicList failed', err);
+      ctx.status = 500;
+      ctx.body = { error: 'page_public_list_failed' };
+    }
+  },
+
 }));

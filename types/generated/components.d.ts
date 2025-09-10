@@ -227,11 +227,13 @@ export interface BlocksText extends Struct.ComponentSchema {
 export interface SharedAddress extends Struct.ComponentSchema {
   collectionName: 'components_shared_addresses';
   info: {
-    displayName: 'address';
+    displayName: 'Address';
   };
   attributes: {
     city: Schema.Attribute.String;
+    company: Schema.Attribute.String;
     country: Schema.Attribute.String;
+    mapLink: Schema.Attribute.String;
     postalCode: Schema.Attribute.String;
     street: Schema.Attribute.String;
   };
@@ -289,6 +291,22 @@ export interface SharedContactInfo extends Struct.ComponentSchema {
     email: Schema.Attribute.Email;
     openingHours: Schema.Attribute.Component<'shared.opening-hour', true>;
     phone: Schema.Attribute.String;
+  };
+}
+
+export interface SharedContactMethod extends Struct.ComponentSchema {
+  collectionName: 'components_shared_contact_methods';
+  info: {
+    displayName: 'Contact Method';
+  };
+  attributes: {
+    href: Schema.Attribute.String;
+    kind: Schema.Attribute.Enumeration<
+      ['phone', 'email', 'whatsapp', 'fax', 'other']
+    > &
+      Schema.Attribute.Required;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    value: Schema.Attribute.String;
   };
 }
 
@@ -397,12 +415,16 @@ export interface SharedNavItem extends Struct.ComponentSchema {
 export interface SharedOpeningHour extends Struct.ComponentSchema {
   collectionName: 'components_shared_opening_hours';
   info: {
-    displayName: 'opening-hour';
+    displayName: 'Opening Hour';
   };
   attributes: {
-    day: Schema.Attribute.String;
-    hours: Schema.Attribute.String;
-    isClosed: Schema.Attribute.Boolean;
+    close: Schema.Attribute.String;
+    day: Schema.Attribute.Enumeration<
+      ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    > &
+      Schema.Attribute.Required;
+    note: Schema.Attribute.String;
+    open: Schema.Attribute.String;
   };
 }
 
@@ -469,6 +491,18 @@ export interface SharedService extends Struct.ComponentSchema {
       ['design', 'consultation', 'engraving', 'repair', 'custom']
     >;
     title: Schema.Attribute.String;
+  };
+}
+
+export interface SharedSimpleLink extends Struct.ComponentSchema {
+  collectionName: 'components_shared_simple_links';
+  info: {
+    displayName: 'Simple Link';
+  };
+  attributes: {
+    href: Schema.Attribute.String & Schema.Attribute.Required;
+    isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -544,6 +578,7 @@ declare module '@strapi/strapi' {
       'shared.button': SharedButton;
       'shared.category': SharedCategory;
       'shared.contact-info': SharedContactInfo;
+      'shared.contact-method': SharedContactMethod;
       'shared.cta': SharedCta;
       'shared.cta-link': SharedCtaLink;
       'shared.dual-cta': SharedDualCta;
@@ -557,6 +592,7 @@ declare module '@strapi/strapi' {
       'shared.ring': SharedRing;
       'shared.seo': SharedSeo;
       'shared.service': SharedService;
+      'shared.simple-link': SharedSimpleLink;
       'shared.slider': SharedSlider;
       'shared.social-link': SharedSocialLink;
       'shared.stat': SharedStat;

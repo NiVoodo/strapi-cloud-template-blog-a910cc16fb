@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_shared_contact_methods",
+  "info": { "displayName": "Contact Method" },
+  "attributes": {
+    "kind": {
+      "type": "enumeration",
+      "enum": ["phone","email","whatsapp","fax","other"],
+      "required": true
+    },
+    "label": { "type": "string", "required": true },
+    "value": { "type": "string" },
+    "href": { "type": "string", "description": "tel:, mailto:, https://…" }
+  }
+}

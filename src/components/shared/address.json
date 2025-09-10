@@ -1,1 +1,12 @@
-{ "collectionName": "components_shared_addresses", "info": { "displayName": "address" }, "attributes": { "street": { "type": "string" }, "postalCode": { "type": "string" }, "city": { "type": "string" }, "country": { "type": "string" } } }
+{
+  "collectionName": "components_shared_addresses",
+  "info": { "displayName": "Address" },
+  "attributes": {
+    "company": { "type": "string" },
+    "street": { "type": "string" },
+    "postalCode": { "type": "string" },
+    "city": { "type": "string" },
+    "country": { "type": "string" },
+    "mapLink": { "type": "string", "description": "Google Maps Link" }
+  }
+}

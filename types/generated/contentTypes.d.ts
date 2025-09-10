@@ -506,6 +506,46 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiFooterFooter extends Struct.SingleTypeSchema {
+  collectionName: 'footers';
+  info: {
+    displayName: 'Footer';
+    pluralName: 'footers';
+    singularName: 'footer';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    address: Schema.Attribute.Component<'shared.address', false>;
+    buttons: Schema.Attribute.Component<'shared.button', true>;
+    contacts: Schema.Attribute.Component<'shared.contact-method', true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    ctaSubtitle: Schema.Attribute.String;
+    ctaTitle: Schema.Attribute.String;
+    legalLinks: Schema.Attribute.Component<'shared.simple-link', true>;
+    legalTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Legal Terms'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::footer.footer'
+    > &
+      Schema.Attribute.Private;
+    note: Schema.Attribute.String;
+    openingHours: Schema.Attribute.Component<'shared.rich-text', false>;
+    publishedAt: Schema.Attribute.DateTime;
+    qrCode: Schema.Attribute.Media<'images'>;
+    qrLink: Schema.Attribute.String;
+    socialLinks: Schema.Attribute.Component<'shared.simple-link', true>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -1134,6 +1174,7 @@ declare module '@strapi/strapi' {
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
+      'api::footer.footer': ApiFooterFooter;
       'api::global.global': ApiGlobalGlobal;
       'api::header.header': ApiHeaderHeader;
       'api::page.page': ApiPagePage;

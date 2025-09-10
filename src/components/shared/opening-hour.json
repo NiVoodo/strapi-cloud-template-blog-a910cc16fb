@@ -1,1 +1,14 @@
-{ "collectionName": "components_shared_opening_hours", "info": { "displayName": "opening-hour" }, "attributes": { "day": { "type": "string" }, "hours": { "type": "string" }, "isClosed": { "type": "boolean" } } }
+{
+  "collectionName": "components_shared_opening_hours",
+  "info": { "displayName": "Opening Hour" },
+  "attributes": {
+    "day": {
+      "type": "enumeration",
+      "enum": ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+      "required": true
+    },
+    "open": { "type": "string", "example": "09:00" },
+    "close": { "type": "string", "example": "18:00" },
+    "note": { "type": "string" }
+  }
+}

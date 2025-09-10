@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_shared_simple_links",
+  "info": { "displayName": "Simple Link" },
+  "attributes": {
+    "label": { "type": "string", "required": true },
+    "href": { "type": "string", "required": true },
+    "isExternal": { "type": "boolean", "default": false }
+  }
+}
