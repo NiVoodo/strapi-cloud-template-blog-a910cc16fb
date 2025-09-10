@@ -559,7 +559,16 @@ export interface ApiHeaderHeader extends Struct.SingleTypeSchema {
       'api::header.header'
     > &
       Schema.Attribute.Private;
-    logo: Schema.Attribute.String;
+    logo: Schema.Attribute.Media<'images'>;
+    logoWidth: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 1024;
+          min: 16;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<160>;
     navigation: Schema.Attribute.Component<'shared.nav-item', true>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
