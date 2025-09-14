@@ -1,9 +1,16 @@
 'use strict';
 
-/**
- * article router.
- */
-
-const { createCoreRouter } = require('@strapi/strapi').factories;
-
-module.exports = createCoreRouter('api::article.article');
+module.exports = {
+  routes: [
+    {
+      method: 'GET',
+      path: '/articles/by-slug/:slug',
+      handler: 'article.bySlug',
+      config: {
+        auth: false,            // <— erlaubt öffentlichen Zugriff
+        policies: [],
+        middlewares: [],
+      },
+    },
+  ],
+};

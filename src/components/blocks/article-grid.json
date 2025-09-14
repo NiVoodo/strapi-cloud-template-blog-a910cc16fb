@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_blocks_article_grids",
+  "info": {
+    "displayName": "Article Grid",
+    "icon": "grid",
+    "description": "Zeigt alle Artikel aus /api/articles/public als Karten"
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "subtitle": { "type": "string" },
+    "columns": { "type": "integer", "default": 3, "min": 2, "max": 4 }
+  }
+}

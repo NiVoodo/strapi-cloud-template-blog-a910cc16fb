@@ -17,6 +17,7 @@
 "blocks.contact",
 "blocks.image",
 "blocks.card-grid",
+"blocks.article-grid",
 "blocks.quote",
 "blocks.text",
 "blocks.pricing-table",

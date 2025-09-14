@@ -4,8 +4,7 @@
   "info": {
     "singularName": "article",
     "pluralName": "articles",
-    "displayName": "Article",
-    "description": "Create your blog content"
+    "displayName": "Article"
   },
   "options": {
     "draftAndPublish": true
@@ -13,37 +12,49 @@
   "pluginOptions": {},
   "attributes": {
     "title": {
-      "type": "string"
-    },
-    "description": {
-      "type": "text",
-      "maxLength": 80
+      "type": "string",
+      "required": true
     },
     "slug": {
       "type": "uid",
-      "targetField": "title"
+      "targetField": "title",
+      "required": true
     },
-    "cover": {
+    "blogimage": {
       "type": "media",
       "multiple": false,
-      "required": false,
-      "allowedTypes": ["images", "files", "videos"]
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     },
-    "author": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::author.author",
-      "inversedBy": "articles"
-    },
-    "category": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::category.category",
-      "inversedBy": "articles"
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
     },
     "blocks": {
       "type": "dynamiczone",
-      "components": ["shared.media", "shared.quote", "shared.rich-text", "shared.slider"]
+      "components": [
+        "blocks.hero",
+        "blocks.services",
+        "blocks.about",
+        "blocks.gallery",
+        "blocks.contact",
+        "blocks.image",
+        "blocks.card-grid",
+        "blocks.quote",
+        "blocks.text",
+        "blocks.pricing-table",
+        "blocks.product-slider",
+        "blocks.space",
+        "blocks.button-group",
+        "blocks.richtext-columns",
+        "blocks.cta",
+        "blocks.media-text"
+      ]
     }
   }
 }

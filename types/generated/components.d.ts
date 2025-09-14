@@ -14,6 +14,28 @@ export interface BlocksAbout extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksArticleGrid extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_article_grids';
+  info: {
+    description: 'Zeigt alle Artikel aus /api/articles/public als Karten';
+    displayName: 'Article Grid';
+    icon: 'grid';
+  };
+  attributes: {
+    columns: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 4;
+          min: 2;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<3>;
+    subtitle: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface BlocksButtonGroup extends Struct.ComponentSchema {
   collectionName: 'components_blocks_button_groups';
   info: {
@@ -113,7 +135,7 @@ export interface BlocksHero extends Struct.ComponentSchema {
     displayName: 'hero';
   };
   attributes: {
-    backgroundImage: Schema.Attribute.Media;
+    backgroundImage: Schema.Attribute.Media<'images'>;
     badge: Schema.Attribute.String;
     features: Schema.Attribute.Component<'shared.feature', true>;
     primaryButtonLink: Schema.Attribute.String;
@@ -657,6 +679,7 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'blocks.about': BlocksAbout;
+      'blocks.article-grid': BlocksArticleGrid;
       'blocks.button-group': BlocksButtonGroup;
       'blocks.card-grid': BlocksCardGrid;
       'blocks.card-item': BlocksCardItem;

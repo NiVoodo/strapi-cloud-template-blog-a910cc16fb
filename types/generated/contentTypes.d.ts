@@ -405,7 +405,6 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
 export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
   collectionName: 'articles';
   info: {
-    description: 'Create your blog content';
     displayName: 'Article';
     pluralName: 'articles';
     singularName: 'article';
@@ -414,19 +413,30 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    author: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
     blocks: Schema.Attribute.DynamicZone<
-      ['shared.media', 'shared.quote', 'shared.rich-text', 'shared.slider']
+      [
+        'blocks.hero',
+        'blocks.services',
+        'blocks.about',
+        'blocks.gallery',
+        'blocks.contact',
+        'blocks.image',
+        'blocks.card-grid',
+        'blocks.quote',
+        'blocks.text',
+        'blocks.pricing-table',
+        'blocks.product-slider',
+        'blocks.space',
+        'blocks.button-group',
+        'blocks.richtext-columns',
+        'blocks.cta',
+        'blocks.media-text',
+      ]
     >;
-    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
-    cover: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
+    blogimage: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 80;
-      }>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -434,8 +444,9 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'title'>;
-    title: Schema.Attribute.String;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -637,6 +648,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.contact',
         'blocks.image',
         'blocks.card-grid',
+        'blocks.article-grid',
         'blocks.quote',
         'blocks.text',
         'blocks.pricing-table',
