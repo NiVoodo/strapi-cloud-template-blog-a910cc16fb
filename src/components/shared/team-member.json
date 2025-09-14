@@ -1,1 +1,27 @@
-{ "collectionName": "components_shared_team_members", "info": { "displayName": "team-member" }, "attributes": { "name": { "type": "string" }, "role": { "type": "string" }, "initials": { "type": "string" } } }
+{
+  "collectionName": "components_shared_team_members",
+  "info": {
+    "displayName": "team-member"
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    },
+    "initials": {
+      "type": "string"
+    },
+    "teamimage": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

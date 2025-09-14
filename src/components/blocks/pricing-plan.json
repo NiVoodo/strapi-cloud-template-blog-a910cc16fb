@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_blocks_pricing_plans",
+  "info": { "displayName": "Pricing Plan", "description": "Single pricing plan" },
+  "options": {},
+  "attributes": {
+    "name": { "type": "string", "required": true },
+    "price": { "type": "string", "required": true },
+    "period": { "type": "string" },
+    "highlight": { "type": "boolean", "default": false },
+    "features": {
+      "type": "component",
+      "repeatable": true,
+      "component": "blocks.pricing-feature",
+      "required": true
+    },
+    "cta": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    }
+  }
+}

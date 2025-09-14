@@ -154,6 +154,76 @@ export interface BlocksMediaText extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksPricingFeature extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_pricing_features';
+  info: {
+    description: 'Feature row for a plan';
+    displayName: 'Pricing Feature';
+  };
+  attributes: {
+    included: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface BlocksPricingPlan extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_pricing_plans';
+  info: {
+    description: 'Single pricing plan';
+    displayName: 'Pricing Plan';
+  };
+  attributes: {
+    cta: Schema.Attribute.Component<'shared.button', false>;
+    features: Schema.Attribute.Component<'blocks.pricing-feature', true> &
+      Schema.Attribute.Required;
+    highlight: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    period: Schema.Attribute.String;
+    price: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface BlocksPricingTable extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_pricing_tables';
+  info: {
+    description: 'Table of multiple plans';
+    displayName: 'Pricing Table';
+  };
+  attributes: {
+    plans: Schema.Attribute.Component<'blocks.pricing-plan', true> &
+      Schema.Attribute.Required;
+    subtitle: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface BlocksProductSlider extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_productsliders';
+  info: {
+    description: 'Zeigt bis zu 10 Produkte aus Meilisearch als Slider an.';
+    displayName: 'Product Slider';
+    icon: 'shopping-bag';
+  };
+  attributes: {
+    attributesToRetrieve: Schema.Attribute.JSON;
+    button: Schema.Attribute.Component<'blocks.button-group', true>;
+    filters: Schema.Attribute.Text;
+    indexName: Schema.Attribute.String & Schema.Attribute.Required;
+    maxItems: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 10;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<10>;
+    query: Schema.Attribute.String;
+    sort: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface BlocksQuote extends Struct.ComponentSchema {
   collectionName: 'components_blocks_quotes';
   info: {
@@ -210,6 +280,20 @@ export interface BlocksServices extends Struct.ComponentSchema {
     services: Schema.Attribute.Component<'shared.service', true>;
     subtitle: Schema.Attribute.Text;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface BlocksSpace extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_space';
+  info: {
+    description: 'Vertikaler Abstand (xs/s/m/l/xl)';
+    displayName: 'Space';
+    icon: 'expand';
+  };
+  attributes: {
+    size: Schema.Attribute.Enumeration<['xs', 's', 'm', 'l', 'xl']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'m'>;
   };
 }
 
@@ -452,6 +536,16 @@ export interface SharedRichText extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedRichtextHtml extends Struct.ComponentSchema {
+  collectionName: 'components_shared_richtext_htmls';
+  info: {
+    displayName: 'Richtext HTML';
+  };
+  attributes: {
+    Text: Schema.Attribute.Blocks;
+  };
+}
+
 export interface SharedRing extends Struct.ComponentSchema {
   collectionName: 'components_shared_rings';
   info: {
@@ -552,6 +646,10 @@ export interface SharedTeamMember extends Struct.ComponentSchema {
     initials: Schema.Attribute.String;
     name: Schema.Attribute.String;
     role: Schema.Attribute.String;
+    teamimage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
   };
 }
 
@@ -568,10 +666,15 @@ declare module '@strapi/strapi' {
       'blocks.hero': BlocksHero;
       'blocks.image': BlocksImage;
       'blocks.media-text': BlocksMediaText;
+      'blocks.pricing-feature': BlocksPricingFeature;
+      'blocks.pricing-plan': BlocksPricingPlan;
+      'blocks.pricing-table': BlocksPricingTable;
+      'blocks.product-slider': BlocksProductSlider;
       'blocks.quote': BlocksQuote;
       'blocks.richtext-column': BlocksRichtextColumn;
       'blocks.richtext-columns': BlocksRichtextColumns;
       'blocks.services': BlocksServices;
+      'blocks.space': BlocksSpace;
       'blocks.text': BlocksText;
       'shared.address': SharedAddress;
       'shared.bullet': SharedBullet;
@@ -589,6 +692,7 @@ declare module '@strapi/strapi' {
       'shared.opening-hour': SharedOpeningHour;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;
+      'shared.richtext-html': SharedRichtextHtml;
       'shared.ring': SharedRing;
       'shared.seo': SharedSeo;
       'shared.service': SharedService;

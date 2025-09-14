@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_blocks_space",
+  "info": {
+    "displayName": "Space",
+    "icon": "expand",
+    "description": "Vertikaler Abstand (xs/s/m/l/xl)"
+  },
+  "attributes": {
+    "size": {
+      "type": "enumeration",
+      "enum": ["xs", "s", "m", "l", "xl"],
+      "default": "m",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "collectionName": "components_blocks_productsliders",
+  "info": {
+    "displayName": "Product Slider",
+    "icon": "shopping-bag",
+    "description": "Zeigt bis zu 10 Produkte aus Meilisearch als Slider an."
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": false
+    },
+    "indexName": {
+      "type": "string",
+      "required": true
+    },
+    "query": {
+      "type": "string",
+      "required": false
+    },
+    "filters": {
+      "type": "text",
+      "required": false
+    },
+    "sort": {
+      "type": "string",
+      "required": false
+    },
+    "attributesToRetrieve": {
+      "type": "json",
+      "required": false
+    },
+    "maxItems": {
+      "type": "integer",
+      "required": false,
+      "default": 10,
+      "min": 1,
+      "max": 10
+    },
+    "button": {
+      "type": "component",
+      "component": "blocks.button-group",
+      "repeatable": true
+    }
+  }
+}

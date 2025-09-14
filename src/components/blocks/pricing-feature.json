@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_blocks_pricing_features",
+  "info": { "displayName": "Pricing Feature", "description": "Feature row for a plan" },
+  "options": {},
+  "attributes": {
+    "label": { "type": "string", "required": true },
+    "included": { "type": "boolean", "default": true }
+  }
+}

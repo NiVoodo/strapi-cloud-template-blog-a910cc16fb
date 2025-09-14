@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_blocks_pricing_tables",
+  "info": { "displayName": "Pricing Table", "description": "Table of multiple plans" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "subtitle": { "type": "string" },
+    "plans": {
+      "type": "component",
+      "repeatable": true,
+      "component": "blocks.pricing-plan",
+      "required": true
+    }
+  }
+}
