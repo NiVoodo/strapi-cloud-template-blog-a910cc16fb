@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_blocks_steps",
+  "info": { "displayName": "Steps", "description": "List of steps / timeline" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "blocks.step-item",
+      "required": true
+    }
+  }
+}

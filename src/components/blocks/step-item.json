@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_blocks_step_items",
+  "info": { "displayName": "Step Item", "description": "One step in a process" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "description": { "type": "text" }
+  }
+}
