@@ -319,6 +319,31 @@ export interface BlocksSpace extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksStepItem extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_step_items';
+  info: {
+    description: 'One step in a process';
+    displayName: 'Step Item';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface BlocksSteps extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_steps';
+  info: {
+    description: 'List of steps / timeline';
+    displayName: 'Steps';
+  };
+  attributes: {
+    items: Schema.Attribute.Component<'blocks.step-item', true> &
+      Schema.Attribute.Required;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface BlocksText extends Struct.ComponentSchema {
   collectionName: 'components_blocks_texts';
   info: {
@@ -698,6 +723,8 @@ declare module '@strapi/strapi' {
       'blocks.richtext-columns': BlocksRichtextColumns;
       'blocks.services': BlocksServices;
       'blocks.space': BlocksSpace;
+      'blocks.step-item': BlocksStepItem;
+      'blocks.steps': BlocksSteps;
       'blocks.text': BlocksText;
       'shared.address': SharedAddress;
       'shared.bullet': SharedBullet;

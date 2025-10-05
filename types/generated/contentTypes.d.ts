@@ -649,6 +649,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.image',
         'blocks.card-grid',
         'blocks.article-grid',
+        'blocks.steps',
         'blocks.quote',
         'blocks.text',
         'blocks.pricing-table',
