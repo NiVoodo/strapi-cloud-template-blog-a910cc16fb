@@ -3,15 +3,44 @@
 "collectionName": "pages",
 "info": { "singularName": "page", "pluralName": "pages", "displayName": "Page" },
 "options": { "draftAndPublish": true },
-"attributes": {
-"title": { "type": "string", "required": true },
-"slug": { "type": "uid", "targetField": "title", "required": true },
-"seo": { "type": "component", "repeatable": false, "component": "shared.seo" },
-"blocks": {
-"type": "dynamiczone",
-"components": [
-"blocks.hero",
-"blocks.services",
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "slug": { "type": "uid", "targetField": "title", "required": true },
+    "seo": { "type": "component", "repeatable": false, "component": "shared.seo" },
+    "topbar": {
+      "type": "dynamiczone",
+      "components": [
+        "sidebar.ad-banner",
+        "sidebar.ad-tile",
+        "sidebar.ad-slider",
+        "sidebar.richtext-tile",
+        "sidebar.topbar-overlay",
+        "sidebar.topbar-image"
+      ]
+    },
+    "leftSidebar": {
+      "type": "dynamiczone",
+      "components": [
+        "sidebar.ad-banner",
+        "sidebar.ad-tile",
+        "sidebar.ad-slider",
+        "sidebar.richtext-tile"
+      ]
+    },
+    "rightSidebar": {
+      "type": "dynamiczone",
+      "components": [
+        "sidebar.ad-banner",
+        "sidebar.ad-tile",
+        "sidebar.ad-slider",
+        "sidebar.richtext-tile"
+      ]
+    },
+    "blocks": {
+      "type": "dynamiczone",
+      "components": [
+        "blocks.hero",
+        "blocks.services",
 "blocks.about",
 "blocks.gallery",
 "blocks.contact",

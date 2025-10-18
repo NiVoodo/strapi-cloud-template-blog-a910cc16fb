@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_sidebar_ad_tiles",
+  "info": { "displayName": "Ad Tile", "description": "Compact promotional tile component" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "description": { "type": "text" },
+    "media": { "type": "media", "multiple": false, "allowedTypes": ["images", "files"] },
+    "badge": { "type": "string" },
+    "cta": { "type": "component", "repeatable": false, "component": "shared.button" }
+  }
+}

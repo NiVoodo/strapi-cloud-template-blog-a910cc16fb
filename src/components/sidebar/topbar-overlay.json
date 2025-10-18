@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_sidebar_topbar_overlays",
+  "info": { "displayName": "Topbar Overlay Banner", "description": "Full-width topbar banner with background image and overlay" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "badge": { "type": "string" },
+    "description": { "type": "text" },
+    "backgroundImage": { "type": "media", "multiple": false, "required": true, "allowedTypes": ["images"] },
+    "overlayColor": { "type": "string", "default": "rgba(0,0,0,0.5)" },
+    "buttons": { "type": "component", "repeatable": true, "component": "shared.button" }
+  }
+}

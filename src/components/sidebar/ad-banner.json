@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_sidebar_ad_banners",
+  "info": { "displayName": "Ad Banner", "description": "Wide promotional banner for topbar or sidebar placements" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "subtitle": { "type": "text" },
+    "media": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "backgroundColor": { "type": "string" },
+    "cta": { "type": "component", "repeatable": false, "component": "shared.button" }
+  }
+}

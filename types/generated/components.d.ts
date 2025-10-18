@@ -700,6 +700,117 @@ export interface SharedTeamMember extends Struct.ComponentSchema {
   };
 }
 
+export interface SidebarAdBanner extends Struct.ComponentSchema {
+  collectionName: 'components_sidebar_ad_banners';
+  info: {
+    description: 'Wide promotional banner for topbar or sidebar placements';
+    displayName: 'Ad Banner';
+  };
+  attributes: {
+    backgroundColor: Schema.Attribute.String;
+    cta: Schema.Attribute.Component<'shared.button', false>;
+    media: Schema.Attribute.Media<'images'>;
+    subtitle: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SidebarAdSlider extends Struct.ComponentSchema {
+  collectionName: 'components_sidebar_ad_sliders';
+  info: {
+    description: 'Slider that cycles through promotional slides';
+    displayName: 'Ad Slider';
+  };
+  attributes: {
+    autoplay: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    autoplayInterval: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<5>;
+    headline: Schema.Attribute.String;
+    slides: Schema.Attribute.Component<'sidebar.slide-item', true> &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+  };
+}
+
+export interface SidebarAdTile extends Struct.ComponentSchema {
+  collectionName: 'components_sidebar_ad_tiles';
+  info: {
+    description: 'Compact promotional tile component';
+    displayName: 'Ad Tile';
+  };
+  attributes: {
+    badge: Schema.Attribute.String;
+    cta: Schema.Attribute.Component<'shared.button', false>;
+    description: Schema.Attribute.Text;
+    media: Schema.Attribute.Media<'images' | 'files'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SidebarRichtextTile extends Struct.ComponentSchema {
+  collectionName: 'components_sidebar_richtext_tiles';
+  info: {
+    description: 'Rich text advertising block with optional buttons';
+    displayName: 'Richtext Tile';
+  };
+  attributes: {
+    backgroundVariant: Schema.Attribute.Enumeration<
+      ['default', 'muted', 'accent', 'contrast']
+    > &
+      Schema.Attribute.DefaultTo<'default'>;
+    body: Schema.Attribute.RichText;
+    buttons: Schema.Attribute.Component<'shared.button', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SidebarSlideItem extends Struct.ComponentSchema {
+  collectionName: 'components_sidebar_slide_items';
+  info: {
+    description: 'Single slide within a sidebar slider';
+    displayName: 'Slide Item';
+  };
+  attributes: {
+    cta: Schema.Attribute.Component<'shared.button', false>;
+    description: Schema.Attribute.Text;
+    media: Schema.Attribute.Media<'images' | 'videos' | 'files'>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SidebarTopbarImage extends Struct.ComponentSchema {
+  collectionName: 'components_sidebar_topbar_images';
+  info: {
+    description: 'Minimal topbar variant that renders only an image';
+    displayName: 'Topbar Image';
+  };
+  attributes: {
+    altText: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+  };
+}
+
+export interface SidebarTopbarOverlay extends Struct.ComponentSchema {
+  collectionName: 'components_sidebar_topbar_overlays';
+  info: {
+    description: 'Full-width topbar banner with background image and overlay';
+    displayName: 'Topbar Overlay Banner';
+  };
+  attributes: {
+    backgroundImage: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.Required;
+    badge: Schema.Attribute.String;
+    buttons: Schema.Attribute.Component<'shared.button', true>;
+    description: Schema.Attribute.Text;
+    overlayColor: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'rgba(0,0,0,0.5)'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
@@ -751,6 +862,13 @@ declare module '@strapi/strapi' {
       'shared.social-link': SharedSocialLink;
       'shared.stat': SharedStat;
       'shared.team-member': SharedTeamMember;
+      'sidebar.ad-banner': SidebarAdBanner;
+      'sidebar.ad-slider': SidebarAdSlider;
+      'sidebar.ad-tile': SidebarAdTile;
+      'sidebar.richtext-tile': SidebarRichtextTile;
+      'sidebar.slide-item': SidebarSlideItem;
+      'sidebar.topbar-image': SidebarTopbarImage;
+      'sidebar.topbar-overlay': SidebarTopbarOverlay;
     }
   }
 }

@@ -1,0 +1,11 @@
+{
+  "collectionName": "components_sidebar_ad_sliders",
+  "info": { "displayName": "Ad Slider", "description": "Slider that cycles through promotional slides" },
+  "options": {},
+  "attributes": {
+    "headline": { "type": "string" },
+    "slides": { "type": "component", "repeatable": true, "component": "sidebar.slide-item", "min": 1 },
+    "autoplay": { "type": "boolean", "default": true },
+    "autoplayInterval": { "type": "integer", "default": 5 }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_sidebar_richtext_tiles",
+  "info": { "displayName": "Richtext Tile", "description": "Rich text advertising block with optional buttons" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string" },
+    "body": { "type": "richtext" },
+    "buttons": { "type": "component", "repeatable": true, "component": "shared.button" },
+    "backgroundVariant": {
+      "type": "enumeration",
+      "enum": ["default", "muted", "accent", "contrast"],
+      "default": "default"
+    }
+  }
+}

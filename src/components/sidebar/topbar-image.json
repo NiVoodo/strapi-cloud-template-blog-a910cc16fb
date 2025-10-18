@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_sidebar_topbar_images",
+  "info": { "displayName": "Topbar Image", "description": "Minimal topbar variant that renders only an image" },
+  "options": {},
+  "attributes": {
+    "image": { "type": "media", "multiple": false, "required": true, "allowedTypes": ["images"] },
+    "altText": { "type": "string" }
+  }
+}
