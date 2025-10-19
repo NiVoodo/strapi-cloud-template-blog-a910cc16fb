@@ -115,6 +115,63 @@ export interface BlocksCta extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksEventGrid extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_event_grids';
+  info: {
+    displayName: 'Event Grid';
+    icon: 'grid';
+  };
+  attributes: {
+    columns: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 3;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<3>;
+    featuredOnly: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    includePast: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    limit: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 24;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<6>;
+    sort: Schema.Attribute.Enumeration<['asc', 'desc']> &
+      Schema.Attribute.DefaultTo<'asc'>;
+    subtitle: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface BlocksEventList extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_event_lists';
+  info: {
+    displayName: 'Event List';
+    icon: 'list';
+  };
+  attributes: {
+    featuredOnly: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    includePast: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    limit: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 100;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<10>;
+    subtitle: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface BlocksGallery extends Struct.ComponentSchema {
   collectionName: 'components_blocks_galleries';
   info: {
@@ -172,6 +229,28 @@ export interface BlocksMediaText extends Struct.ComponentSchema {
     mediaPosition: Schema.Attribute.Enumeration<['left', 'right']> &
       Schema.Attribute.DefaultTo<'left'>;
     richText: Schema.Attribute.RichText;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface BlocksNewsList extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_news_lists';
+  info: {
+    displayName: 'News List';
+    icon: 'list';
+  };
+  attributes: {
+    featuredOnly: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    limit: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 100;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<10>;
+    subtitle: Schema.Attribute.Text;
     title: Schema.Attribute.String;
   };
 }
@@ -821,10 +900,13 @@ declare module '@strapi/strapi' {
       'blocks.card-item': BlocksCardItem;
       'blocks.contact': BlocksContact;
       'blocks.cta': BlocksCta;
+      'blocks.event-grid': BlocksEventGrid;
+      'blocks.event-list': BlocksEventList;
       'blocks.gallery': BlocksGallery;
       'blocks.hero': BlocksHero;
       'blocks.image': BlocksImage;
       'blocks.media-text': BlocksMediaText;
+      'blocks.news-list': BlocksNewsList;
       'blocks.pricing-feature': BlocksPricingFeature;
       'blocks.pricing-plan': BlocksPricingPlan;
       'blocks.pricing-table': BlocksPricingTable;

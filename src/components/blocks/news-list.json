@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_blocks_news_lists",
+  "info": {
+    "displayName": "News List",
+    "icon": "list"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "limit": {
+      "type": "integer",
+      "min": 1,
+      "max": 100,
+      "default": 10
+    },
+    "featuredOnly": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "kind": "singleType",
+  "collectionName": "layouts",
+  "info": { "singularName": "layout", "pluralName": "layouts", "displayName": "Layout" },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "topbar": {
+      "type": "dynamiczone",
+      "components": [
+        "sidebar.ad-banner",
+        "sidebar.ad-tile",
+        "sidebar.ad-slider",
+        "sidebar.richtext-tile",
+        "sidebar.topbar-overlay",
+        "sidebar.topbar-image"
+      ]
+    },
+    "leftSidebar": {
+      "type": "dynamiczone",
+      "components": [
+        "sidebar.ad-banner",
+        "sidebar.ad-tile",
+        "sidebar.ad-slider",
+        "sidebar.richtext-tile"
+      ]
+    },
+    "rightSidebar": {
+      "type": "dynamiczone",
+      "components": [
+        "sidebar.ad-banner",
+        "sidebar.ad-tile",
+        "sidebar.ad-slider",
+        "sidebar.richtext-tile"
+      ]
+    }
+  }
+}

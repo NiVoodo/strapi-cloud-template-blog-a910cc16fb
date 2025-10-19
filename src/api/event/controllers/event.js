@@ -1,10 +1,10 @@
 'use strict';
 
 /**
- * Dynamischer Deep-Populate-Controller für Strapi v5 (CommonJS).
+ * Erweiterter Event-Controller mit Deep-Populate-Hilfen.
  * Endpunkte:
- *   GET /api/articles/by-slug/:slug?status=published|draft&depth=4
- *   GET /api/articles/public?status=published|draft&page=1&pageSize=100
+ *   GET /api/events/by-slug/:slug?status=published|draft&depth=4
+ *   GET /api/events/upcoming?status=published|draft&from=2024-01-01&page=1&pageSize=50&featured=true
  */
 
 const { factories } = require('@strapi/strapi');
@@ -124,9 +124,13 @@ function buildPopulateForContentType(strapi, ctUid, options = {}) {
   return populate;
 }
 
-module.exports = factories.createCoreController('api::article.article', ({ strapi }) => ({
+function parseDateOrNull(value) {
+  if (!value) return null;
+  const date = new Date(value);
+  return Number.isFinite(date?.getTime()) ? date.toISOString() : null;
+}
 
-  // ==== UNVERÄNDERT: /api/articles/by-slug/:slug ====
+module.exports = factories.createCoreController('api::event.event', ({ strapi }) => ({
   async bySlug(ctx) {
     const { slug } = ctx.params;
     if (!slug) return ctx.badRequest('Missing slug');
@@ -136,88 +140,121 @@ module.exports = factories.createCoreController('api::article.article', ({ strap
     const depthParam = Number(ctx.query.depth);
     const maxDepth = Number.isFinite(depthParam) && depthParam > 0 ? Math.min(depthParam, 8) : 4;
 
-    const populate = buildPopulateForContentType(strapi, 'api::article.article', { maxDepth });
+    const populate = buildPopulateForContentType(strapi, 'api::event.event', { maxDepth });
 
     if (process.env.NODE_ENV !== 'production') {
       try {
-        strapi.log.debug(`[article.bySlug] populate => ${JSON.stringify(populate)}`);
-      } catch { /* no-op */ }
+        strapi.log.debug(`[event.bySlug] populate => ${JSON.stringify(populate)}`);
+      } catch {
+        /* no-op */
+      }
     }
 
-    const page = await strapi.documents('api::article.article').findFirst({
+    const event = await strapi.documents('api::event.event').findFirst({
       status,
       filters: { slug: { $eq: slug } },
       populate,
     });
 
-    if (!page) return ctx.notFound('article not found');
-    ctx.body = page;
+    if (!event) return ctx.notFound('event not found');
+    ctx.body = event;
   },
 
-  // ==== PUBLIC LIST: /api/articles/public ====
-  async publicList(ctx) {
+  async upcoming(ctx) {
     try {
       const status = ctx.query.status === 'draft' ? 'draft' : 'published';
       const page = Number(ctx.query.page) || 1;
       const pageSize = Number(ctx.query.pageSize) || 100;
 
-      const result = await strapi.documents('api::article.article').findMany({
+      const fromOverride = parseDateOrNull(ctx.query.from);
+      const nowIso = new Date().toISOString();
+      const dateLowerBound = ctx.query.includePast === 'true' ? null : (fromOverride || nowIso);
+
+      const filters = {
+        slug: { $notNull: true },
+      };
+      if (dateLowerBound) {
+        filters.startDate = { $gte: dateLowerBound };
+      }
+
+      if (ctx.query.featured === 'true') {
+        filters.isFeatured = { $eq: true };
+      }
+
+      const sort = ctx.query.sort === 'desc'
+        ? [{ startDate: 'desc' }]
+        : [{ startDate: 'asc' }];
+
+      const result = await strapi.documents('api::event.event').findMany({
         status,
-        // Wir liefern slug, Titel, Datum & Magazin-Metadaten (plus Bilder)
         fields: [
           'slug',
           'title',
           'subtitle',
           'summary',
-          'publicationDate',
-          'readingMinutes',
+          'startDate',
+          'endDate',
+          'timezone',
+          'locationType',
+          'venueName',
+          'onlineEventUrl',
+          'registrationLink',
+          'registrationDeadline',
+          'organizer',
+          'audience',
+          'eventStatus',
+          'capacity',
+          'priceDetails',
           'isFeatured',
-          'externalLink',
           'updatedAt',
         ],
         populate: {
-          blogimage: {
-            // v5: leeres Objekt = 1-Level-Populate (id, url, formats, ...)
-            // Optional: mit fields einschränken
-            // fields: ['url', 'alternativeText', 'width', 'height', 'formats', 'name'],
-          },
+          heroImage: ONE_LEVEL,
           gallery: ONE_LEVEL,
+          address: { populate: ONE_LEVEL },
+          cta: { populate: ONE_LEVEL },
+          speakers: { populate: ONE_LEVEL },
         },
-        filters: {
-          slug: { $notNull: true },
-          publicationDate: { $notNull: true },
-        },
-        sort: [
-          { publicationDate: 'desc' },
-          { updatedAt: 'desc' },
-        ],
+        filters,
+        sort,
         page,
         pageSize,
       });
 
       const items = Array.isArray(result?.results) ? result.results : (result || []);
 
-      // Rohfelder + populierte Medien schlank nach außen geben
-      const data = items.map((e) => ({
-        slug: e.slug,
-        title: e.title,
-        subtitle: e.subtitle || null,
-        summary: e.summary || null,
-        publicationDate: e.publicationDate || null,
-        readingMinutes: e.readingMinutes || null,
-        isFeatured: Boolean(e.isFeatured),
-        externalLink: e.externalLink || null,
-        updatedAt: e.updatedAt,
-        blogimage: e.blogimage || null,
-        gallery: e.gallery || [],
+      const data = items.map((event) => ({
+        slug: event.slug,
+        title: event.title,
+        subtitle: event.subtitle || null,
+        summary: event.summary || null,
+        startDate: event.startDate || null,
+        endDate: event.endDate || null,
+        timezone: event.timezone || null,
+        locationType: event.locationType || 'on-site',
+        venueName: event.venueName || null,
+        address: event.address || null,
+        onlineEventUrl: event.onlineEventUrl || null,
+        registrationLink: event.registrationLink || null,
+        registrationDeadline: event.registrationDeadline || null,
+        organizer: event.organizer || null,
+        audience: event.audience || null,
+        eventStatus: event.eventStatus || 'scheduled',
+        capacity: Number.isFinite(event.capacity) ? event.capacity : null,
+        priceDetails: event.priceDetails || null,
+        isFeatured: Boolean(event.isFeatured),
+        updatedAt: event.updatedAt,
+        heroImage: event.heroImage || null,
+        gallery: event.gallery || [],
+        speakers: Array.isArray(event.speakers) ? event.speakers : [],
+        cta: event.cta || null,
       }));
 
       ctx.body = { data };
     } catch (err) {
-      strapi.log.error('article.publicList failed', err);
+      strapi.log.error('event.upcoming failed', err);
       ctx.status = 500;
-      ctx.body = { error: 'article_public_list_failed' };
+      ctx.body = { error: 'event_upcoming_failed' };
     }
   },
-
 }));

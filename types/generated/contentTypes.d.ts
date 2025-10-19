@@ -437,15 +437,28 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    externalLink: Schema.Attribute.String;
+    gallery: Schema.Attribute.Media<'images' | 'videos', true>;
+    isFeatured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::article.article'
     > &
       Schema.Attribute.Private;
+    publicationDate: Schema.Attribute.Date & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
+    readingMinutes: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    subtitle: Schema.Attribute.String;
+    summary: Schema.Attribute.Text;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -514,6 +527,89 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiEventEvent extends Struct.CollectionTypeSchema {
+  collectionName: 'events';
+  info: {
+    displayName: 'Event';
+    pluralName: 'events';
+    singularName: 'event';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    address: Schema.Attribute.Component<'shared.address', false>;
+    audience: Schema.Attribute.String;
+    blocks: Schema.Attribute.DynamicZone<
+      [
+        'blocks.hero',
+        'blocks.services',
+        'blocks.about',
+        'blocks.gallery',
+        'blocks.contact',
+        'blocks.image',
+        'blocks.card-grid',
+        'blocks.quote',
+        'blocks.text',
+        'blocks.pricing-table',
+        'blocks.product-slider',
+        'blocks.space',
+        'blocks.button-group',
+        'blocks.richtext-columns',
+        'blocks.cta',
+        'blocks.media-text',
+      ]
+    >;
+    capacity: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    contactEmail: Schema.Attribute.Email;
+    contactPhone: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta: Schema.Attribute.Component<'shared.cta', false>;
+    endDate: Schema.Attribute.DateTime;
+    eventStatus: Schema.Attribute.Enumeration<
+      ['scheduled', 'postponed', 'cancelled', 'sold-out']
+    > &
+      Schema.Attribute.DefaultTo<'scheduled'>;
+    gallery: Schema.Attribute.Media<'images' | 'videos', true>;
+    heroImage: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    isFeatured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
+      Schema.Attribute.Private;
+    locationType: Schema.Attribute.Enumeration<
+      ['on-site', 'online', 'hybrid']
+    > &
+      Schema.Attribute.DefaultTo<'on-site'>;
+    onlineEventUrl: Schema.Attribute.String;
+    organizer: Schema.Attribute.String;
+    priceDetails: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    registrationDeadline: Schema.Attribute.DateTime;
+    registrationLink: Schema.Attribute.String;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    speakers: Schema.Attribute.Component<'shared.team-member', true>;
+    startDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    subtitle: Schema.Attribute.String;
+    summary: Schema.Attribute.Text;
+    timezone: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Europe/Berlin'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    venueName: Schema.Attribute.String;
   };
 }
 
@@ -628,6 +724,59 @@ export interface ApiHeaderHeader extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiLayoutLayout extends Struct.SingleTypeSchema {
+  collectionName: 'layouts';
+  info: {
+    displayName: 'Layout';
+    pluralName: 'layouts';
+    singularName: 'layout';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    leftSidebar: Schema.Attribute.DynamicZone<
+      [
+        'sidebar.ad-banner',
+        'sidebar.ad-tile',
+        'sidebar.ad-slider',
+        'sidebar.richtext-tile',
+      ]
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::layout.layout'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    rightSidebar: Schema.Attribute.DynamicZone<
+      [
+        'sidebar.ad-banner',
+        'sidebar.ad-tile',
+        'sidebar.ad-slider',
+        'sidebar.richtext-tile',
+      ]
+    >;
+    topbar: Schema.Attribute.DynamicZone<
+      [
+        'sidebar.ad-banner',
+        'sidebar.ad-tile',
+        'sidebar.ad-slider',
+        'sidebar.richtext-tile',
+        'sidebar.topbar-overlay',
+        'sidebar.topbar-image',
+      ]
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiPagePage extends Struct.CollectionTypeSchema {
   collectionName: 'pages';
   info: {
@@ -649,6 +798,9 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.image',
         'blocks.card-grid',
         'blocks.article-grid',
+        'blocks.event-grid',
+        'blocks.event-list',
+        'blocks.news-list',
         'blocks.steps',
         'blocks.quote',
         'blocks.text',
@@ -664,39 +816,13 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    leftSidebar: Schema.Attribute.DynamicZone<
-      [
-        'sidebar.ad-banner',
-        'sidebar.ad-tile',
-        'sidebar.ad-slider',
-        'sidebar.richtext-tile',
-      ]
-    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::page.page'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    rightSidebar: Schema.Attribute.DynamicZone<
-      [
-        'sidebar.ad-banner',
-        'sidebar.ad-tile',
-        'sidebar.ad-slider',
-        'sidebar.richtext-tile',
-      ]
-    >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
-    topbar: Schema.Attribute.DynamicZone<
-      [
-        'sidebar.ad-banner',
-        'sidebar.ad-tile',
-        'sidebar.ad-slider',
-        'sidebar.richtext-tile',
-        'sidebar.topbar-overlay',
-        'sidebar.topbar-image',
-      ]
-    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1216,9 +1342,11 @@ declare module '@strapi/strapi' {
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
+      'api::event.event': ApiEventEvent;
       'api::footer.footer': ApiFooterFooter;
       'api::global.global': ApiGlobalGlobal;
       'api::header.header': ApiHeaderHeader;
+      'api::layout.layout': ApiLayoutLayout;
       'api::page.page': ApiPagePage;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

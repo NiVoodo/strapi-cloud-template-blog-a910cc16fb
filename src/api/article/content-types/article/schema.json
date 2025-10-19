@@ -20,6 +20,28 @@
       "targetField": "title",
       "required": true
     },
+    "publicationDate": {
+      "type": "date",
+      "required": true
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "text"
+    },
+    "readingMinutes": {
+      "type": "integer",
+      "min": 1
+    },
+    "isFeatured": {
+      "type": "boolean",
+      "default": false
+    },
+    "externalLink": {
+      "type": "string",
+      "description": "Optional link to the original publication or related resource"
+    },
     "blogimage": {
       "type": "media",
       "multiple": false,
@@ -28,6 +50,14 @@
         "files",
         "videos",
         "audios"
+      ]
+    },
+    "gallery": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "videos"
       ]
     },
     "seo": {
