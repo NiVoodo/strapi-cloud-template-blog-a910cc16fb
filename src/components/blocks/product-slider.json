@@ -11,6 +11,24 @@
       "type": "string",
       "required": false
     },
+    "subtitle": {
+      "type": "string",
+      "required": false
+    },
+    "description": {
+      "type": "text",
+      "required": false
+    },
+    "displayMode": {
+      "type": "enumeration",
+      "enum": [
+        "Slider",
+        "List",
+        "Grid"
+      ],
+      "default": "Slider",
+      "required": false
+    },
     "indexName": {
       "type": "string",
       "required": true
