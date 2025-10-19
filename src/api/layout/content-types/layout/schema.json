@@ -12,7 +12,9 @@
         "sidebar.ad-slider",
         "sidebar.richtext-tile",
         "sidebar.topbar-overlay",
-        "sidebar.topbar-image"
+        "sidebar.topbar-image",
+        "sidebar.news-banner",
+        "sidebar.event-banner"
       ]
     },
     "leftSidebar": {
@@ -21,7 +23,13 @@
         "sidebar.ad-banner",
         "sidebar.ad-tile",
         "sidebar.ad-slider",
-        "sidebar.richtext-tile"
+        "sidebar.richtext-tile",
+        "sidebar.news-list",
+        "sidebar.event-list",
+        "sidebar.news-tile",
+        "sidebar.event-tile",
+        "sidebar.news-banner",
+        "sidebar.event-banner"
       ]
     },
     "rightSidebar": {
@@ -30,7 +38,13 @@
         "sidebar.ad-banner",
         "sidebar.ad-tile",
         "sidebar.ad-slider",
-        "sidebar.richtext-tile"
+        "sidebar.richtext-tile",
+        "sidebar.news-list",
+        "sidebar.event-list",
+        "sidebar.news-tile",
+        "sidebar.event-tile",
+        "sidebar.news-banner",
+        "sidebar.event-banner"
       ]
     }
   }

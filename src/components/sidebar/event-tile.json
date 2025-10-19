@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_sidebar_event_tiles",
+  "info": {
+    "displayName": "Event Tile",
+    "description": "Highlights a selected event with key facts"
+  },
+  "options": {},
+  "attributes": {
+    "event": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::event.event"
+    },
+    "titleOverride": {
+      "type": "string"
+    },
+    "summaryOverride": {
+      "type": "text"
+    },
+    "showDates": {
+      "type": "boolean",
+      "default": true
+    },
+    "showLocation": {
+      "type": "boolean",
+      "default": true
+    },
+    "badge": {
+      "type": "string"
+    },
+    "cta": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    }
+  }
+}

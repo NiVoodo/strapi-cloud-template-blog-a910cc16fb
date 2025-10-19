@@ -65,6 +65,14 @@
       "component": "shared.seo",
       "repeatable": false
     },
+    "hideLeftSidebar": {
+      "type": "boolean",
+      "default": false
+    },
+    "hideRightSidebar": {
+      "type": "boolean",
+      "default": false
+    },
     "blocks": {
       "type": "dynamiczone",
       "components": [

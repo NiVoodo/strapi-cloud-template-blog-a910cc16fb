@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_sidebar_news_tiles",
+  "info": {
+    "displayName": "News Tile",
+    "description": "Highlights a single selected news article"
+  },
+  "options": {},
+  "attributes": {
+    "article": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::article.article"
+    },
+    "titleOverride": {
+      "type": "string"
+    },
+    "summaryOverride": {
+      "type": "text"
+    },
+    "showPublicationDate": {
+      "type": "boolean",
+      "default": true
+    },
+    "showImage": {
+      "type": "boolean",
+      "default": true
+    },
+    "badge": {
+      "type": "string"
+    },
+    "cta": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.button"
+    }
+  }
+}

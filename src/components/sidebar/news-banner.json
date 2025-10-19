@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_sidebar_news_banners",
+  "info": {
+    "displayName": "News Banner",
+    "description": "Large banner featuring a selected news article"
+  },
+  "options": {},
+  "attributes": {
+    "article": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::article.article"
+    },
+    "titleOverride": {
+      "type": "string"
+    },
+    "kicker": {
+      "type": "string"
+    },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "overlayColor": {
+      "type": "string",
+      "default": "rgba(0,0,0,0.5)"
+    },
+    "cta": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.button"
+    }
+  }
+}

@@ -829,6 +829,128 @@ export interface SidebarAdTile extends Struct.ComponentSchema {
   };
 }
 
+export interface SidebarEventBanner extends Struct.ComponentSchema {
+  collectionName: 'components_sidebar_event_banners';
+  info: {
+    description: 'Large banner featuring a selected event';
+    displayName: 'Event Banner';
+  };
+  attributes: {
+    backgroundImage: Schema.Attribute.Media<'images'>;
+    cta: Schema.Attribute.Component<'shared.button', true>;
+    event: Schema.Attribute.Relation<'oneToOne', 'api::event.event'>;
+    kicker: Schema.Attribute.String;
+    overlayColor: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'rgba(0,0,0,0.5)'>;
+    titleOverride: Schema.Attribute.String;
+  };
+}
+
+export interface SidebarEventList extends Struct.ComponentSchema {
+  collectionName: 'components_sidebar_event_lists';
+  info: {
+    description: 'Shows upcoming events in the sidebar';
+    displayName: 'Event List';
+  };
+  attributes: {
+    cta: Schema.Attribute.Component<'shared.cta-link', false>;
+    featuredOnly: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    includePast: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    limit: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 50;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<5>;
+    showLocation: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    showStartDate: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    subtitle: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SidebarEventTile extends Struct.ComponentSchema {
+  collectionName: 'components_sidebar_event_tiles';
+  info: {
+    description: 'Highlights a selected event with key facts';
+    displayName: 'Event Tile';
+  };
+  attributes: {
+    badge: Schema.Attribute.String;
+    cta: Schema.Attribute.Component<'shared.button', false>;
+    event: Schema.Attribute.Relation<'oneToOne', 'api::event.event'>;
+    showDates: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    showLocation: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    summaryOverride: Schema.Attribute.Text;
+    titleOverride: Schema.Attribute.String;
+  };
+}
+
+export interface SidebarNewsBanner extends Struct.ComponentSchema {
+  collectionName: 'components_sidebar_news_banners';
+  info: {
+    description: 'Large banner featuring a selected news article';
+    displayName: 'News Banner';
+  };
+  attributes: {
+    article: Schema.Attribute.Relation<'oneToOne', 'api::article.article'>;
+    backgroundImage: Schema.Attribute.Media<'images'>;
+    cta: Schema.Attribute.Component<'shared.button', true>;
+    kicker: Schema.Attribute.String;
+    overlayColor: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'rgba(0,0,0,0.5)'>;
+    titleOverride: Schema.Attribute.String;
+  };
+}
+
+export interface SidebarNewsList extends Struct.ComponentSchema {
+  collectionName: 'components_sidebar_news_lists';
+  info: {
+    description: 'Automatically lists recent news/articles in the sidebar';
+    displayName: 'News List';
+  };
+  attributes: {
+    cta: Schema.Attribute.Component<'shared.cta-link', false>;
+    featuredOnly: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    limit: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 50;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<5>;
+    showImages: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    showPublicationDate: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>;
+    showSummaries: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    subtitle: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SidebarNewsTile extends Struct.ComponentSchema {
+  collectionName: 'components_sidebar_news_tiles';
+  info: {
+    description: 'Highlights a single selected news article';
+    displayName: 'News Tile';
+  };
+  attributes: {
+    article: Schema.Attribute.Relation<'oneToOne', 'api::article.article'>;
+    badge: Schema.Attribute.String;
+    cta: Schema.Attribute.Component<'shared.button', false>;
+    showImage: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    showPublicationDate: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>;
+    summaryOverride: Schema.Attribute.Text;
+    titleOverride: Schema.Attribute.String;
+  };
+}
+
 export interface SidebarRichtextTile extends Struct.ComponentSchema {
   collectionName: 'components_sidebar_richtext_tiles';
   info: {
@@ -947,6 +1069,12 @@ declare module '@strapi/strapi' {
       'sidebar.ad-banner': SidebarAdBanner;
       'sidebar.ad-slider': SidebarAdSlider;
       'sidebar.ad-tile': SidebarAdTile;
+      'sidebar.event-banner': SidebarEventBanner;
+      'sidebar.event-list': SidebarEventList;
+      'sidebar.event-tile': SidebarEventTile;
+      'sidebar.news-banner': SidebarNewsBanner;
+      'sidebar.news-list': SidebarNewsList;
+      'sidebar.news-tile': SidebarNewsTile;
       'sidebar.richtext-tile': SidebarRichtextTile;
       'sidebar.slide-item': SidebarSlideItem;
       'sidebar.topbar-image': SidebarTopbarImage;

@@ -1,0 +1,43 @@
+{
+  "collectionName": "components_sidebar_news_lists",
+  "info": {
+    "displayName": "News List",
+    "description": "Automatically lists recent news/articles in the sidebar"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "limit": {
+      "type": "integer",
+      "min": 1,
+      "max": 50,
+      "default": 5
+    },
+    "featuredOnly": {
+      "type": "boolean",
+      "default": false
+    },
+    "showPublicationDate": {
+      "type": "boolean",
+      "default": true
+    },
+    "showImages": {
+      "type": "boolean",
+      "default": true
+    },
+    "showSummaries": {
+      "type": "boolean",
+      "default": false
+    },
+    "cta": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.cta-link"
+    }
+  }
+}

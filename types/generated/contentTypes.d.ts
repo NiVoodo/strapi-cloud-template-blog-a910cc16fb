@@ -439,6 +439,10 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     externalLink: Schema.Attribute.String;
     gallery: Schema.Attribute.Media<'images' | 'videos', true>;
+    hideLeftSidebar: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    hideRightSidebar: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
     isFeatured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -583,6 +587,10 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
       Schema.Attribute.DefaultTo<'scheduled'>;
     gallery: Schema.Attribute.Media<'images' | 'videos', true>;
     heroImage: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    hideLeftSidebar: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    hideRightSidebar: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
     isFeatured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
@@ -744,6 +752,12 @@ export interface ApiLayoutLayout extends Struct.SingleTypeSchema {
         'sidebar.ad-tile',
         'sidebar.ad-slider',
         'sidebar.richtext-tile',
+        'sidebar.news-list',
+        'sidebar.event-list',
+        'sidebar.news-tile',
+        'sidebar.event-tile',
+        'sidebar.news-banner',
+        'sidebar.event-banner',
       ]
     >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -759,6 +773,12 @@ export interface ApiLayoutLayout extends Struct.SingleTypeSchema {
         'sidebar.ad-tile',
         'sidebar.ad-slider',
         'sidebar.richtext-tile',
+        'sidebar.news-list',
+        'sidebar.event-list',
+        'sidebar.news-tile',
+        'sidebar.event-tile',
+        'sidebar.news-banner',
+        'sidebar.event-banner',
       ]
     >;
     topbar: Schema.Attribute.DynamicZone<
@@ -769,6 +789,8 @@ export interface ApiLayoutLayout extends Struct.SingleTypeSchema {
         'sidebar.richtext-tile',
         'sidebar.topbar-overlay',
         'sidebar.topbar-image',
+        'sidebar.news-banner',
+        'sidebar.event-banner',
       ]
     >;
     updatedAt: Schema.Attribute.DateTime;
@@ -816,6 +838,10 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    hideLeftSidebar: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    hideRightSidebar: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::page.page'> &
       Schema.Attribute.Private;

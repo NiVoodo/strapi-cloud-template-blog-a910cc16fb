@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_sidebar_event_banners",
+  "info": {
+    "displayName": "Event Banner",
+    "description": "Large banner featuring a selected event"
+  },
+  "options": {},
+  "attributes": {
+    "event": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::event.event"
+    },
+    "titleOverride": {
+      "type": "string"
+    },
+    "kicker": {
+      "type": "string"
+    },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "overlayColor": {
+      "type": "string",
+      "default": "rgba(0,0,0,0.5)"
+    },
+    "cta": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.button"
+    }
+  }
+}
