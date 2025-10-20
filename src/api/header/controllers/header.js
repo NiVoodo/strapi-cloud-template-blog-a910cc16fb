@@ -10,10 +10,41 @@ module.exports = createCoreController('api::header.header', ({ strapi }) => ({
    */
   async public(ctx) {
     try {
+      const MAX_NAV_DEPTH = 3;
+
+      const mapNavItems = (items, depth = 1) => {
+        if (!Array.isArray(items) || depth > MAX_NAV_DEPTH) {
+          return [];
+        }
+
+        return items
+          .filter(Boolean)
+          .map((item) => {
+            const nextDepth = depth + 1;
+            const children = item.children ? mapNavItems(item.children, nextDepth) : [];
+
+            return {
+              id: item.id ?? null,
+              label: item.label ?? '',
+              href: item.href ?? null,
+              isExternal: typeof item.isExternal === 'boolean' ? item.isExternal : false,
+              children,
+            };
+          });
+      };
+
       // SingleType laden inkl. Relationen/Media
       const entry = await strapi.entityService.findMany('api::header.header', {
         populate: {
-          navigation: true,
+          navigation: {
+            populate: {
+              children: {
+                populate: {
+                  children: true,
+                },
+              },
+            },
+          },
           ctaButton: true,
           logo: true, // <-- Bild mitliefern
         },
@@ -44,7 +75,7 @@ module.exports = createCoreController('api::header.header', ({ strapi }) => ({
         attributes: {
           logo,                           // <- Bilddaten
           logoWidth: entry.logoWidth ?? null, // <- Wunschbreite in px
-          navigation: Array.isArray(entry.navigation) ? entry.navigation : [],
+          navigation: mapNavItems(entry.navigation),
           ctaButton: entry.ctaButton ?? null
         }
       };

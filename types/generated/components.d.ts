@@ -617,12 +617,52 @@ export interface SharedMedia extends Struct.ComponentSchema {
 export interface SharedNavItem extends Struct.ComponentSchema {
   collectionName: 'components_shared_nav_items';
   info: {
-    displayName: 'nav-item';
+    displayName: 'Navigation Item';
+  };
+  attributes: {
+    children: Schema.Attribute.Component<'shared.nav-subitem', true> &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 12;
+          min: 0;
+        },
+        number
+      >;
+    href: Schema.Attribute.String;
+    isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedNavSubitem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_nav_subitems';
+  info: {
+    displayName: 'Navigation Sub Item';
+  };
+  attributes: {
+    children: Schema.Attribute.Component<'shared.nav-tertiary-item', true> &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 12;
+          min: 0;
+        },
+        number
+      >;
+    href: Schema.Attribute.String;
+    isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedNavTertiaryItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_nav_tertiary_items';
+  info: {
+    displayName: 'Navigation Tertiary Item';
   };
   attributes: {
     href: Schema.Attribute.String;
-    isExternal: Schema.Attribute.Boolean;
-    label: Schema.Attribute.String;
+    isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -1058,6 +1098,8 @@ declare module '@strapi/strapi' {
       'shared.form-field': SharedFormField;
       'shared.media': SharedMedia;
       'shared.nav-item': SharedNavItem;
+      'shared.nav-subitem': SharedNavSubitem;
+      'shared.nav-tertiary-item': SharedNavTertiaryItem;
       'shared.opening-hour': SharedOpeningHour;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;

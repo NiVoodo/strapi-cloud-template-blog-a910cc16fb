@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_shared_nav_tertiary_items",
+  "info": { "displayName": "Navigation Tertiary Item" },
+  "attributes": {
+    "label": { "type": "string", "required": true },
+    "href": { "type": "string" },
+    "isExternal": { "type": "boolean", "default": false }
+  }
+}

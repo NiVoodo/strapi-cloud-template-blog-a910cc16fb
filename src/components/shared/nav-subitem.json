@@ -1,6 +1,6 @@
 {
-  "collectionName": "components_shared_nav_items",
-  "info": { "displayName": "Navigation Item" },
+  "collectionName": "components_shared_nav_subitems",
+  "info": { "displayName": "Navigation Sub Item" },
   "attributes": {
     "label": { "type": "string", "required": true },
     "href": { "type": "string" },
@@ -8,7 +8,7 @@
     "children": {
       "type": "component",
       "repeatable": true,
-      "component": "shared.nav-subitem",
+      "component": "shared.nav-tertiary-item",
       "min": 0,
       "max": 12
     }
