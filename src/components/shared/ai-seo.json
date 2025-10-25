@@ -1,0 +1,67 @@
+{
+  "collectionName": "components_shared_ai_seos",
+  "info": {
+    "displayName": "AI SEO",
+    "icon": "robot",
+    "description": "Prompt- und Ergebnisdaten f\u00fcr AI-unterst\u00fctzte Meta-Texte"
+  },
+  "options": {},
+  "attributes": {
+    "prompt": {
+      "type": "text",
+      "required": false
+    },
+    "targetAudience": {
+      "type": "string"
+    },
+    "toneOfVoice": {
+      "type": "enumeration",
+      "enum": [
+        "informational",
+        "conversational",
+        "professional",
+        "playful",
+        "urgent",
+        "authoritative",
+        "friendly",
+        "luxury",
+        "technical"
+      ],
+      "default": "informational"
+    },
+    "primaryKeyword": {
+      "type": "string"
+    },
+    "secondaryKeywords": {
+      "type": "json",
+      "required": false
+    },
+    "callToAction": {
+      "type": "string"
+    },
+    "generatedTitle": {
+      "type": "string"
+    },
+    "generatedDescription": {
+      "type": "text"
+    },
+    "generatedKeywords": {
+      "type": "json"
+    },
+    "provider": {
+      "type": "string",
+      "description": "z.B. OpenAI, Azure OpenAI, Vertex, etc."
+    },
+    "model": {
+      "type": "string"
+    },
+    "confidenceScore": {
+      "type": "decimal",
+      "min": 0,
+      "max": 1
+    },
+    "lastGeneratedAt": {
+      "type": "datetime"
+    }
+  }
+}

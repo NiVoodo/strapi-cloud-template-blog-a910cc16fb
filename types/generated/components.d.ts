@@ -453,6 +453,50 @@ export interface SharedAddress extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedAiSeo extends Struct.ComponentSchema {
+  collectionName: 'components_shared_ai_seos';
+  info: {
+    description: 'Prompt- und Ergebnisdaten f\u00FCr AI-unterst\u00FCtzte Meta-Texte';
+    displayName: 'AI SEO';
+    icon: 'robot';
+  };
+  attributes: {
+    callToAction: Schema.Attribute.String;
+    confidenceScore: Schema.Attribute.Decimal &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 1;
+          min: 0;
+        },
+        number
+      >;
+    generatedDescription: Schema.Attribute.Text;
+    generatedKeywords: Schema.Attribute.JSON;
+    generatedTitle: Schema.Attribute.String;
+    lastGeneratedAt: Schema.Attribute.DateTime;
+    model: Schema.Attribute.String;
+    primaryKeyword: Schema.Attribute.String;
+    prompt: Schema.Attribute.Text;
+    provider: Schema.Attribute.String;
+    secondaryKeywords: Schema.Attribute.JSON;
+    targetAudience: Schema.Attribute.String;
+    toneOfVoice: Schema.Attribute.Enumeration<
+      [
+        'informational',
+        'conversational',
+        'professional',
+        'playful',
+        'urgent',
+        'authoritative',
+        'friendly',
+        'luxury',
+        'technical',
+      ]
+    > &
+      Schema.Attribute.DefaultTo<'informational'>;
+  };
+}
+
 export interface SharedBullet extends Struct.ComponentSchema {
   collectionName: 'components_shared_bullets';
   info: {
@@ -614,6 +658,36 @@ export interface SharedMedia extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedMetaSocial extends Struct.ComponentSchema {
+  collectionName: 'components_shared_meta_socials';
+  info: {
+    description: 'Individuelle Social/Open-Graph Metadaten pro Netzwerk';
+    displayName: 'Meta Social';
+    icon: 'share-alt';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images'>;
+    imageAlt: Schema.Attribute.String;
+    socialNetwork: Schema.Attribute.Enumeration<
+      [
+        'facebook',
+        'instagram',
+        'linkedin',
+        'pinterest',
+        'twitter',
+        'x',
+        'whatsapp',
+        'threads',
+      ]
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'facebook'>;
+    title: Schema.Attribute.String;
+    url: Schema.Attribute.String;
+  };
+}
+
 export interface SharedNavItem extends Struct.ComponentSchema {
   collectionName: 'components_shared_nav_items';
   info: {
@@ -731,15 +805,95 @@ export interface SharedRing extends Struct.ComponentSchema {
 export interface SharedSeo extends Struct.ComponentSchema {
   collectionName: 'components_shared_seos';
   info: {
-    description: '';
-    displayName: 'Seo';
+    description: 'State-of-the-art Meta-, OG- und AI-Einstellungen';
+    displayName: 'SEO Suite';
     icon: 'allergies';
     name: 'Seo';
   };
   attributes: {
-    metaDescription: Schema.Attribute.Text & Schema.Attribute.Required;
-    metaTitle: Schema.Attribute.String & Schema.Attribute.Required;
+    aiAssistant: Schema.Attribute.Component<'shared.ai-seo', false>;
+    canonicalUrl: Schema.Attribute.String;
+    contentType: Schema.Attribute.Enumeration<
+      [
+        'website',
+        'webpage',
+        'article',
+        'news',
+        'event',
+        'product',
+        'faq',
+        'custom',
+      ]
+    > &
+      Schema.Attribute.DefaultTo<'webpage'>;
+    extraMeta: Schema.Attribute.JSON;
+    focusKeyword: Schema.Attribute.String;
+    metaDescription: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 165;
+      }>;
+    metaKeywords: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    metaLanguage: Schema.Attribute.String & Schema.Attribute.DefaultTo<'de-DE'>;
+    metaRobots: Schema.Attribute.Enumeration<
+      ['index,follow', 'index,nofollow', 'noindex,follow', 'noindex,nofollow']
+    > &
+      Schema.Attribute.DefaultTo<'index,follow'>;
+    metaSocial: Schema.Attribute.Component<'shared.meta-social', true>;
+    metaTitle: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 70;
+      }>;
+    metaViewport: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'width=device-width, initial-scale=1'>;
+    ogDescription: Schema.Attribute.Text;
+    ogLocale: Schema.Attribute.String & Schema.Attribute.DefaultTo<'de_DE'>;
+    ogModifiedTime: Schema.Attribute.DateTime;
+    ogPublishedTime: Schema.Attribute.DateTime;
+    ogTitle: Schema.Attribute.String;
+    ogType: Schema.Attribute.Enumeration<
+      ['website', 'article', 'event', 'profile', 'product', 'book']
+    > &
+      Schema.Attribute.DefaultTo<'website'>;
+    ogUrl: Schema.Attribute.String;
+    schemaType: Schema.Attribute.Enumeration<
+      [
+        'WebPage',
+        'Article',
+        'NewsArticle',
+        'BlogPosting',
+        'Event',
+        'Product',
+        'FAQPage',
+        'HowTo',
+        'VideoObject',
+        'Custom',
+      ]
+    > &
+      Schema.Attribute.DefaultTo<'WebPage'>;
     shareImage: Schema.Attribute.Media<'images'>;
+    shareImageAlt: Schema.Attribute.String;
+    sitemapChangeFreq: Schema.Attribute.Enumeration<
+      ['always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never']
+    >;
+    sitemapPriority: Schema.Attribute.Decimal &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 1;
+          min: 0;
+        },
+        number
+      >;
+    structuredData: Schema.Attribute.JSON;
+    twitterCard: Schema.Attribute.Enumeration<
+      ['summary', 'summary_large_image', 'player', 'app']
+    > &
+      Schema.Attribute.DefaultTo<'summary_large_image'>;
+    twitterCreator: Schema.Attribute.String;
   };
 }
 
@@ -1086,6 +1240,7 @@ declare module '@strapi/strapi' {
       'blocks.steps': BlocksSteps;
       'blocks.text': BlocksText;
       'shared.address': SharedAddress;
+      'shared.ai-seo': SharedAiSeo;
       'shared.bullet': SharedBullet;
       'shared.button': SharedButton;
       'shared.category': SharedCategory;
@@ -1097,6 +1252,7 @@ declare module '@strapi/strapi' {
       'shared.feature': SharedFeature;
       'shared.form-field': SharedFormField;
       'shared.media': SharedMedia;
+      'shared.meta-social': SharedMetaSocial;
       'shared.nav-item': SharedNavItem;
       'shared.nav-subitem': SharedNavSubitem;
       'shared.nav-tertiary-item': SharedNavTertiaryItem;

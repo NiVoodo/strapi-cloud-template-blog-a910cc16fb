@@ -1,0 +1,48 @@
+{
+  "collectionName": "components_shared_meta_socials",
+  "info": {
+    "displayName": "Meta Social",
+    "icon": "share-alt",
+    "description": "Individuelle Social/Open-Graph Metadaten pro Netzwerk"
+  },
+  "options": {},
+  "attributes": {
+    "socialNetwork": {
+      "type": "enumeration",
+      "enum": [
+        "facebook",
+        "instagram",
+        "linkedin",
+        "pinterest",
+        "twitter",
+        "x",
+        "whatsapp",
+        "threads"
+      ],
+      "default": "facebook",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": false
+    },
+    "description": {
+      "type": "text",
+      "required": false
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "imageAlt": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string",
+      "regex": "^(https?:)?\\/\\/.+",
+      "required": false
+    }
+  }
+}

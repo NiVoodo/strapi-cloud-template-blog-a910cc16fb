@@ -8,6 +8,7 @@
  */
 
 const { factories } = require('@strapi/strapi');
+const { buildSeoPayload } = require('../../../utils/seo');
 
 /** Utils */
 const isObject = (v) => v && typeof v === 'object' && !Array.isArray(v);
@@ -157,6 +158,13 @@ module.exports = factories.createCoreController('api::event.event', ({ strapi })
     });
 
     if (!event) return ctx.notFound('event not found');
+
+    event.seoMeta = await buildSeoPayload({
+      entity: event,
+      type: 'event',
+      strapi,
+      fallbackImage: event.heroImage || null,
+    });
     ctx.body = event;
   },
 
@@ -255,6 +263,41 @@ module.exports = factories.createCoreController('api::event.event', ({ strapi })
       strapi.log.error('event.upcoming failed', err);
       ctx.status = 500;
       ctx.body = { error: 'event_upcoming_failed' };
+    }
+  },
+
+  async generateSeo(ctx) {
+    try {
+      const { id } = ctx.params;
+      if (!id) return ctx.badRequest('Missing id');
+
+      const document = await strapi.documents('api::event.event').findOne({
+        documentId: id,
+        populate: {
+          blocks: { on: {} },
+        },
+      });
+
+      if (!document) return ctx.notFound('Event not found');
+
+      const { seoComponent } = await generateSeoForEntity({
+        entity: document,
+        type: 'event',
+        strapi,
+      });
+
+      await strapi.documents('api::event.event').update({
+        documentId: id,
+        data: {
+          seo: seoComponent,
+        },
+      });
+
+      ctx.body = { data: { documentId: id, seo: seoComponent } };
+    } catch (error) {
+      strapi.log.error('event.generateSeo failed', error);
+      ctx.status = 500;
+      ctx.body = { error: 'ai_seo_failed', message: error.message };
     }
   },
 }));

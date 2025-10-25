@@ -8,6 +8,8 @@
  */
 
 const { factories } = require('@strapi/strapi');
+const { generateSeoForEntity } = require('../../../utils/ai-seo');
+const { buildSeoPayload } = require('../../../utils/seo');
 
 /** Utils */
 const isObject = (v) => v && typeof v === 'object' && !Array.isArray(v);
@@ -151,6 +153,13 @@ module.exports = factories.createCoreController('api::article.article', ({ strap
     });
 
     if (!page) return ctx.notFound('article not found');
+
+    page.seoMeta = await buildSeoPayload({
+      entity: page,
+      type: 'news',
+      strapi,
+      fallbackImage: page.blogimage || null,
+    });
     ctx.body = page;
   },
 
@@ -217,6 +226,41 @@ module.exports = factories.createCoreController('api::article.article', ({ strap
       strapi.log.error('article.publicList failed', err);
       ctx.status = 500;
       ctx.body = { error: 'article_public_list_failed' };
+    }
+  },
+
+  async generateSeo(ctx) {
+    try {
+      const { id } = ctx.params;
+      if (!id) return ctx.badRequest('Missing id');
+
+      const document = await strapi.documents('api::article.article').findOne({
+        documentId: id,
+        populate: {
+          blocks: { on: {} },
+        },
+      });
+
+      if (!document) return ctx.notFound('Article not found');
+
+      const { seoComponent } = await generateSeoForEntity({
+        entity: document,
+        type: 'news',
+        strapi,
+      });
+
+      await strapi.documents('api::article.article').update({
+        documentId: id,
+        data: {
+          seo: seoComponent,
+        },
+      });
+
+      ctx.body = { data: { documentId: id, seo: seoComponent } };
+    } catch (error) {
+      strapi.log.error('article.generateSeo failed', error);
+      ctx.status = 500;
+      ctx.body = { error: 'ai_seo_failed', message: error.message };
     }
   },
 

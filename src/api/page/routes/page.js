@@ -7,7 +7,16 @@ module.exports = {
       path: '/pages/by-slug/:slug',
       handler: 'page.bySlug',
       config: {
-        auth: false,            // <— erlaubt öffentlichen Zugriff
+        auth: false,
+        policies: [],
+        middlewares: [],
+      },
+    },
+    {
+      method: 'POST',
+      path: '/pages/:id/generate-seo',
+      handler: 'page.generateSeo',
+      config: {
         policies: [],
         middlewares: [],
       },

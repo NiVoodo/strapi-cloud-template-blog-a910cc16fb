@@ -3,24 +3,171 @@
   "info": {
     "name": "Seo",
     "icon": "allergies",
-    "displayName": "Seo",
-    "description": ""
+    "displayName": "SEO Suite",
+    "description": "State-of-the-art Meta-, OG- und AI-Einstellungen"
   },
   "options": {},
   "attributes": {
     "metaTitle": {
       "type": "string",
-      "required": true
+      "required": true,
+      "maxLength": 70
     },
     "metaDescription": {
       "type": "text",
-      "required": true
+      "required": true,
+      "maxLength": 165
+    },
+    "metaKeywords": {
+      "type": "text",
+      "required": false,
+      "maxLength": 255
+    },
+    "focusKeyword": {
+      "type": "string",
+      "required": false
+    },
+    "canonicalUrl": {
+      "type": "string",
+      "regex": "^(https?:)?\\/\\/.+",
+      "required": false
+    },
+    "metaRobots": {
+      "type": "enumeration",
+      "enum": [
+        "index,follow",
+        "index,nofollow",
+        "noindex,follow",
+        "noindex,nofollow"
+      ],
+      "default": "index,follow"
+    },
+    "metaViewport": {
+      "type": "string",
+      "default": "width=device-width, initial-scale=1"
+    },
+    "metaLanguage": {
+      "type": "string",
+      "default": "de-DE"
+    },
+    "sitemapPriority": {
+      "type": "decimal",
+      "min": 0,
+      "max": 1
+    },
+    "sitemapChangeFreq": {
+      "type": "enumeration",
+      "enum": [
+        "always",
+        "hourly",
+        "daily",
+        "weekly",
+        "monthly",
+        "yearly",
+        "never"
+      ]
+    },
+    "contentType": {
+      "type": "enumeration",
+      "enum": [
+        "website",
+        "webpage",
+        "article",
+        "news",
+        "event",
+        "product",
+        "faq",
+        "custom"
+      ],
+      "default": "webpage"
+    },
+    "schemaType": {
+      "type": "enumeration",
+      "enum": [
+        "WebPage",
+        "Article",
+        "NewsArticle",
+        "BlogPosting",
+        "Event",
+        "Product",
+        "FAQPage",
+        "HowTo",
+        "VideoObject",
+        "Custom"
+      ],
+      "default": "WebPage"
+    },
+    "structuredData": {
+      "type": "json",
+      "required": false
     },
     "shareImage": {
       "type": "media",
       "multiple": false,
       "required": false,
       "allowedTypes": ["images"]
+    },
+    "shareImageAlt": {
+      "type": "string"
+    },
+    "ogTitle": {
+      "type": "string"
+    },
+    "ogDescription": {
+      "type": "text"
+    },
+    "ogType": {
+      "type": "enumeration",
+      "enum": [
+        "website",
+        "article",
+        "event",
+        "profile",
+        "product",
+        "book"
+      ],
+      "default": "website"
+    },
+    "ogLocale": {
+      "type": "string",
+      "default": "de_DE"
+    },
+    "ogUrl": {
+      "type": "string"
+    },
+    "ogPublishedTime": {
+      "type": "datetime"
+    },
+    "ogModifiedTime": {
+      "type": "datetime"
+    },
+    "twitterCard": {
+      "type": "enumeration",
+      "enum": [
+        "summary",
+        "summary_large_image",
+        "player",
+        "app"
+      ],
+      "default": "summary_large_image"
+    },
+    "twitterCreator": {
+      "type": "string",
+      "description": "@handle"
+    },
+    "metaSocial": {
+      "type": "component",
+      "component": "shared.meta-social",
+      "repeatable": true
+    },
+    "aiAssistant": {
+      "type": "component",
+      "component": "shared.ai-seo",
+      "repeatable": false
+    },
+    "extraMeta": {
+      "type": "json",
+      "description": "Freiform-Metatags (Key/Value)"
     }
   }
 }
