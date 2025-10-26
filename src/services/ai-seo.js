@@ -360,7 +360,7 @@ const buildPrompt = (context) => {
     'Verwende einen klaren, suchmaschinenoptimierten Schreibstil.',
     'Orientiere dich am gegebenen Inhalt und erfinde nichts, was dort nicht erwähnt ist.',
     'Achte auf Längenlimits (70 Zeichen Title, 165 Zeichen Description).',
-    'Nutze Keywords sinnvoll, ohne Keyword-Stuffing.',
+    'Liefere exakt fünf Meta-Keywords und fünf Secondary Keywords, ohne Keyword-Stuffing.',
     'Erzeuge JSON, das exakt der beschriebenen Struktur entspricht, ohne zusätzlichen Text.',
     'Erzeuge keine Bild- oder Media-Referenzen.',
   ];
@@ -368,7 +368,7 @@ const buildPrompt = (context) => {
   const schema = {
     metaTitle: 'string (<=70 Zeichen)',
     metaDescription: 'string (<=165 Zeichen)',
-    metaKeywords: ['keyword1', 'keyword2'],
+    metaKeywords: ['keyword1', 'keyword2', 'keyword3', 'keyword4', 'keyword5'],
     focusKeyword: 'string',
     metaRobots: 'index,follow | index,nofollow | noindex,follow | noindex,nofollow',
     metaLanguage: 'BCP-47 Locale z.B. de-DE',
@@ -390,7 +390,7 @@ const buildPrompt = (context) => {
     ],
     extraMeta: { 'name-oder-property': 'wert' },
     primaryKeyword: 'string',
-    secondaryKeywords: ['keyword'],
+    secondaryKeywords: ['keyword1', 'keyword2', 'keyword3', 'keyword4', 'keyword5'],
     callToAction: 'string',
     toneOfVoice: 'informational|conversational|professional|playful|urgent|authoritative|friendly|luxury|technical',
     confidence: '0 - 1',
