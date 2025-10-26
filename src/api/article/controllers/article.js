@@ -8,9 +8,7 @@
  */
 
 const { factories } = require('@strapi/strapi');
-const { generateSeoForEntity } = require('../../../utils/ai-seo');
 const { buildSeoPayload } = require('../../../utils/seo');
-const { findDocumentByAnyIdentifier } = require('../../../utils/document-resolver');
 
 /** Utils */
 const isObject = (v) => v && typeof v === 'object' && !Array.isArray(v);
@@ -227,44 +225,6 @@ module.exports = factories.createCoreController('api::article.article', ({ strap
       strapi.log.error('article.publicList failed', err);
       ctx.status = 500;
       ctx.body = { error: 'article_public_list_failed' };
-    }
-  },
-
-  async generateSeo(ctx) {
-    try {
-      const { id } = ctx.params;
-      if (!id) return ctx.badRequest('Missing id');
-
-      const document = await findDocumentByAnyIdentifier({
-        strapi,
-        uid: 'api::article.article',
-        identifier: id,
-        populate: {
-          blocks: { on: {} },
-        },
-      });
-
-      if (!document) return ctx.notFound('Article not found');
-
-      const { seoComponent } = await generateSeoForEntity({
-        entity: document,
-        type: 'news',
-        strapi,
-      });
-
-      await strapi.documents('api::article.article').update({
-        documentId: document.documentId,
-        data: {
-          seo: seoComponent,
-        },
-        status: 'published',
-      });
-
-      ctx.body = { data: { documentId: document.documentId, seo: seoComponent } };
-    } catch (error) {
-      strapi.log.error('article.generateSeo failed', error);
-      ctx.status = 500;
-      ctx.body = { error: 'ai_seo_failed', message: error.message };
     }
   },
 

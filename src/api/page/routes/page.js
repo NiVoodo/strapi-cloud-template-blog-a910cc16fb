@@ -12,14 +12,5 @@ module.exports = {
         middlewares: [],
       },
     },
-    {
-      method: 'POST',
-      path: '/pages/:id/generate-seo',
-      handler: 'page.generateSeo',
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
   ],
 };

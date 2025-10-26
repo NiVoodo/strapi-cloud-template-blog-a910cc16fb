@@ -4,7 +4,6 @@ const fs = require('fs-extra');
 const path = require('path');
 const mime = require('mime-types');
 const { categories, authors, articles, global, about } = require('../data/data.json');
-const { runSeoBackfill } = require('./utils/seo-cron');
 
 async function seedExampleApp() {
   const shouldImportSeedData = await isFirstRun();
@@ -270,16 +269,6 @@ async function main() {
 }
 
 
-module.exports = async ({ strapi }) => {
+module.exports = async () => {
   await seedExampleApp();
-
-  const cronEnabled = (process.env.SEO_CRON_ENABLED || 'true').toLowerCase() !== 'false';
-  if (cronEnabled) {
-    try {
-      await runSeoBackfill(strapi);
-      strapi.log.info('[seo-cron] Initial backfill completed on bootstrap.');
-    } catch (error) {
-      strapi.log.error(`[seo-cron] Initial backfill failed on bootstrap: ${error.message}`);
-    }
-  }
 };

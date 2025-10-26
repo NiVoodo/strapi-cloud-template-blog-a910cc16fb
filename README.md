@@ -57,8 +57,6 @@ Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/
 - The shared `SEO Suite` component (pages, news/articles and events) exposes meta basics, sitemap hints, OG/Twitter overrides, per-network social payloads and optional AI assist data for future-proof optimization.
 - Detail endpoints (`/api/pages/by-slug`, `/api/articles/by-slug`, `/api/events/by-slug`) now attach a computed `seoMeta` block with normalized meta/open graph/twitter data plus JSON-LD so the frontend can render tags without extra transforms.
 - Provide optional JSON-LD overrides or additional meta tags through the new `structuredData` and `extraMeta` fields whenever you need to go beyond the auto-generated payload.
-- Trigger a fresh OpenAI pass at any time via `POST /api/pages/:id/generate-seo`, `POST /api/articles/:id/generate-seo` or `POST /api/events/:id/generate-seo` (requires an authenticated request). The `:id` can be the documentId, the numeric entry id, or simply the slug; each call overwrites the SEO component of that entry with AI-generated data and publishes the document immediately.
-- A background cron (`config/cron-tasks.js`) runs every 5 minutes and backfills missing SEO for pages, articles and events, automatically publishing each entry after writing the AI result. Tune it via `SEO_CRON_ENABLED`, `SEO_CRON_RULE`, `SEO_CRON_BATCH`, `SEO_CRON_TZ`.
 
 ## Ô£¿ Community
 

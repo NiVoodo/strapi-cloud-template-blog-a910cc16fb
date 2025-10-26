@@ -9,8 +9,6 @@
 
 const { factories } = require('@strapi/strapi');
 const { buildSeoPayload } = require('../../../utils/seo');
-const { generateSeoForEntity } = require('../../../utils/ai-seo');
-const { findDocumentByAnyIdentifier } = require('../../../utils/document-resolver');
 
 /** Utils */
 const isObject = (v) => v && typeof v === 'object' && !Array.isArray(v);
@@ -268,41 +266,4 @@ module.exports = factories.createCoreController('api::event.event', ({ strapi })
     }
   },
 
-  async generateSeo(ctx) {
-    try {
-      const { id } = ctx.params;
-      if (!id) return ctx.badRequest('Missing id');
-
-      const document = await findDocumentByAnyIdentifier({
-        strapi,
-        uid: 'api::event.event',
-        identifier: id,
-        populate: {
-          blocks: { on: {} },
-        },
-      });
-
-      if (!document) return ctx.notFound('Event not found');
-
-      const { seoComponent } = await generateSeoForEntity({
-        entity: document,
-        type: 'event',
-        strapi,
-      });
-
-      await strapi.documents('api::event.event').update({
-        documentId: document.documentId,
-        data: {
-          seo: seoComponent,
-        },
-        status: 'published',
-      });
-
-      ctx.body = { data: { documentId: document.documentId, seo: seoComponent } };
-    } catch (error) {
-      strapi.log.error('event.generateSeo failed', error);
-      ctx.status = 500;
-      ctx.body = { error: 'ai_seo_failed', message: error.message };
-    }
-  },
 }));
