@@ -432,7 +432,7 @@ const callOpenAi = async ({ prompt, apiKey, temperature }) => {
       body: JSON.stringify({
         model: MODEL,
         temperature,
-        max_tokens: 600,
+        max_tokens: 1500,
         response_format: { type: 'json_object' },
         messages: [
           {
