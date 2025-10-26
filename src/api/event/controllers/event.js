@@ -9,6 +9,8 @@
 
 const { factories } = require('@strapi/strapi');
 const { buildSeoPayload } = require('../../../utils/seo');
+const { generateSeoForEntity } = require('../../../utils/ai-seo');
+const { findDocumentByAnyIdentifier } = require('../../../utils/document-resolver');
 
 /** Utils */
 const isObject = (v) => v && typeof v === 'object' && !Array.isArray(v);
@@ -271,8 +273,10 @@ module.exports = factories.createCoreController('api::event.event', ({ strapi })
       const { id } = ctx.params;
       if (!id) return ctx.badRequest('Missing id');
 
-      const document = await strapi.documents('api::event.event').findOne({
-        documentId: id,
+      const document = await findDocumentByAnyIdentifier({
+        strapi,
+        uid: 'api::event.event',
+        identifier: id,
         populate: {
           blocks: { on: {} },
         },
@@ -287,13 +291,14 @@ module.exports = factories.createCoreController('api::event.event', ({ strapi })
       });
 
       await strapi.documents('api::event.event').update({
-        documentId: id,
+        documentId: document.documentId,
         data: {
           seo: seoComponent,
         },
+        status: 'published',
       });
 
-      ctx.body = { data: { documentId: id, seo: seoComponent } };
+      ctx.body = { data: { documentId: document.documentId, seo: seoComponent } };
     } catch (error) {
       strapi.log.error('event.generateSeo failed', error);
       ctx.status = 500;

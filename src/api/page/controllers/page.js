@@ -12,6 +12,7 @@
 
 const { factories } = require('@strapi/strapi');
 const { generateSeoForEntity } = require('../../../utils/ai-seo');
+const { findDocumentByAnyIdentifier } = require('../../../utils/document-resolver');
 const { buildSeoPayload } = require('../../../utils/seo');
 
 /** Utils */
@@ -210,8 +211,10 @@ module.exports = factories.createCoreController('api::page.page', ({ strapi }) =
       const { id } = ctx.params;
       if (!id) return ctx.badRequest('Missing id');
 
-      const document = await strapi.documents('api::page.page').findOne({
-        documentId: id,
+      const document = await findDocumentByAnyIdentifier({
+        strapi,
+        uid: 'api::page.page',
+        identifier: id,
         populate: {
           blocks: { on: {} },
         },
@@ -226,13 +229,14 @@ module.exports = factories.createCoreController('api::page.page', ({ strapi }) =
       });
 
       await strapi.documents('api::page.page').update({
-        documentId: id,
+        documentId: document.documentId,
         data: {
           seo: seoComponent,
         },
+        status: 'published',
       });
 
-      ctx.body = { data: { documentId: id, seo: seoComponent } };
+      ctx.body = { data: { documentId: document.documentId, seo: seoComponent } };
     } catch (error) {
       strapi.log.error('page.generateSeo failed', error);
       ctx.status = 500;

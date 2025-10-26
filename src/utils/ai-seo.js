@@ -8,7 +8,19 @@ const DEFAULT_TEMPERATURE = process.env.OPENAI_SEO_TEMPERATURE
   ? Number(process.env.OPENAI_SEO_TEMPERATURE)
   : 0.25;
 const TARGET_AUDIENCE = process.env.OPENAI_SEO_AUDIENCE || 'B2B Entscheider:innen in der DACH-Region';
-const TONE_OF_VOICE = process.env.OPENAI_SEO_TONE || 'professional';
+const TONE_OPTIONS = [
+  'informational',
+  'conversational',
+  'professional',
+  'playful',
+  'urgent',
+  'authoritative',
+  'friendly',
+  'luxury',
+  'technical',
+];
+const TONE_OF_VOICE =
+  (process.env.OPENAI_SEO_TONE || 'professional').toLowerCase();
 const MAX_SOURCE_CHARS = 6000;
 
 const TYPE_META = {
@@ -203,6 +215,13 @@ const ensureStructuredData = (value) => {
   return null;
 };
 
+const sanitizeToneOfVoice = (value) => {
+  if (!value) return 'informational';
+  const normalized = value.toString().trim().toLowerCase();
+  if (TONE_OPTIONS.includes(normalized)) return normalized;
+  return 'informational';
+};
+
 const generateSeoForEntity = async ({ entity, type = 'page', strapi }) => {
   const typeMeta = TYPE_META[type] || TYPE_META.page;
   const apiKey = process.env.OPENAI_API_KEY;
@@ -215,6 +234,10 @@ const generateSeoForEntity = async ({ entity, type = 'page', strapi }) => {
 
   const keywords = toKeywordList(aiResult.keywords).slice(0, 8);
   const secondaryKeywords = keywords.slice(1);
+
+  const toneOfVoice = sanitizeToneOfVoice(
+    aiResult.toneOfVoice || TONE_OF_VOICE
+  );
 
   const seoComponent = {
     metaTitle: aiResult.metaTitle?.trim(),
@@ -245,7 +268,7 @@ const generateSeoForEntity = async ({ entity, type = 'page', strapi }) => {
     aiAssistant: {
       prompt,
       targetAudience: aiResult.targetAudience || TARGET_AUDIENCE,
-      toneOfVoice: aiResult.toneOfVoice || TONE_OF_VOICE,
+      toneOfVoice,
       primaryKeyword: keywords[0] || null,
       secondaryKeywords,
       callToAction: aiResult.callToAction || null,
