@@ -21,7 +21,24 @@ const globalCache = {
   payload: null,
 };
 
-const sanitizeBaseUrl = (value = '') => value.replace(/\/+$/, '');
+const ensureProtocol = (value = '') => {
+  if (!value) return '';
+  const trimmed = value.trim();
+  if (!trimmed) return '';
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  if (/^https?:\/(?!\/)/i.test(trimmed)) {
+    return trimmed.replace(/^(https?):\/(?!\/)/i, '$1://');
+  }
+  if (/^https?:[^/]/i.test(trimmed)) {
+    return trimmed.replace(/^(https?):/i, '$1://');
+  }
+  if (/^\/\//.test(trimmed)) {
+    return `https:${trimmed}`;
+  }
+  return trimmed;
+};
+
+const sanitizeBaseUrl = (value = '') => ensureProtocol(value).replace(/\/+$/, '');
 
 const parseJsonField = (value) => {
   if (!value) return null;
@@ -482,4 +499,10 @@ const buildSeoPayload = async ({
 module.exports = {
   buildSeoPayload,
   fetchGlobalDefaults,
+  BASE_PATHS,
+  SEO_TYPE_MAP,
+  getSiteUrl,
+  normalizePath,
+  sanitizeBaseUrl,
+  ensureAbsoluteUrl,
 };

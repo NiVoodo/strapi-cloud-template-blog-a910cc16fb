@@ -4,6 +4,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const mime = require('mime-types');
 const { categories, authors, articles, global, about } = require('../data/data.json');
+const { createAiSeoService } = require('./services/ai-seo');
 
 async function seedExampleApp() {
   const shouldImportSeedData = await isFirstRun();
@@ -269,6 +270,30 @@ async function main() {
 }
 
 
-module.exports = async () => {
+module.exports = async ({ strapi }) => {
   await seedExampleApp();
+
+  try {
+    const aiSeo = createAiSeoService({ strapi });
+    if (!aiSeo.isEnabled()) {
+      strapi.log.info('AI SEO automation disabled (set OPENAI_API_KEY to enable).');
+      return;
+    }
+
+    strapi.db.lifecycles.subscribe({
+      models: aiSeo.targetModels,
+      async afterCreate(event) {
+        await aiSeo.handleLifecycle(event);
+      },
+      async afterUpdate(event) {
+        await aiSeo.handleLifecycle(event);
+      },
+    });
+
+    strapi.log.info(
+      `AI SEO automation ready for ${aiSeo.targetModels.join(', ')} using ${process.env.OPENAI_SEO_MODEL || 'gpt-4o-mini'}`,
+    );
+  } catch (error) {
+    strapi.log.error(`AI SEO automation failed to initialize: ${error.message}`);
+  }
 };
