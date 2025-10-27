@@ -460,6 +460,7 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
         number
       >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
+    seoGoal: Schema.Attribute.Text;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     subtitle: Schema.Attribute.String;
     summary: Schema.Attribute.Text;
@@ -606,6 +607,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     registrationDeadline: Schema.Attribute.DateTime;
     registrationLink: Schema.Attribute.String;
     seo: Schema.Attribute.Component<'shared.seo', false>;
+    seoGoal: Schema.Attribute.Text;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     speakers: Schema.Attribute.Component<'shared.team-member', true>;
     startDate: Schema.Attribute.DateTime & Schema.Attribute.Required;
@@ -847,6 +849,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     seo: Schema.Attribute.Component<'shared.seo', false>;
+    seoGoal: Schema.Attribute.Text;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;

@@ -366,6 +366,13 @@ const buildPrompt = (context) => {
     'Erzeuge keine Bild- oder Media-Referenzen.',
   ];
 
+  if (context.goal) {
+    const goal = context.goal.replace(/\s+/g, ' ').trim();
+    if (goal) {
+      instructions.push(`Richte alle SEO-Texte strikt am folgenden SEO-Ziel aus: ${goal}`);
+    }
+  }
+
   const schema = {
     metaTitle: 'string (<=70 Zeichen)',
     metaDescription: 'string (<=165 Zeichen)',
@@ -577,6 +584,7 @@ const buildContextPayload = ({ entry, type, label, siteUrl }) => {
   const updatedAt = entry.updatedAt || entry.publishedAt || new Date().toISOString();
   const summary = entry.summary || entry.subtitle || entry.description || entry.excerpt || '';
   const content = collectReadableText(entry);
+  const goal = typeof entry.seoGoal === 'string' ? entry.seoGoal.trim() : '';
   const payload = {
     type,
     label,
@@ -592,6 +600,10 @@ const buildContextPayload = ({ entry, type, label, siteUrl }) => {
     content,
   };
 
+  if (goal) {
+    payload.seoGoal = goal;
+  }
+
   return {
     payload,
     canonicalUrl,
@@ -604,6 +616,7 @@ const buildContextPayload = ({ entry, type, label, siteUrl }) => {
     type,
     label,
     siteUrl,
+    goal,
   };
 };
 

@@ -20,6 +20,10 @@
       "targetField": "title",
       "required": true
     },
+    "seoGoal": {
+      "type": "text",
+      "required": false
+    },
     "subtitle": {
       "type": "string"
     },
