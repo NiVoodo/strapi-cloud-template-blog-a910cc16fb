@@ -14,7 +14,7 @@
       "default": "left"
     },
     "title": { "type": "string" },
-    "richText": { "type": "richtext" },
+    "richText": { "type": "blocks" },
     "buttons": {
       "type": "component",
       "repeatable": true,

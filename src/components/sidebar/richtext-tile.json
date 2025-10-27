@@ -4,7 +4,7 @@
   "options": {},
   "attributes": {
     "title": { "type": "string" },
-    "body": { "type": "richtext" },
+    "body": { "type": "blocks" },
     "buttons": { "type": "component", "repeatable": true, "component": "shared.button" },
     "backgroundVariant": {
       "type": "enumeration",

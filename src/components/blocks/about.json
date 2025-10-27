@@ -1,11 +1,30 @@
 {
-"collectionName": "components_blocks_abouts",
-"info": { "displayName": "about" },
-"attributes": {
-"title": { "type": "string", "required": true },
-"content": { "type": "richtext" },
-"stats": { "type": "component", "repeatable": true, "component": "shared.stat" },
-"features": { "type": "component", "repeatable": true, "component": "shared.bullet" },
-"teamMembers": { "type": "component", "repeatable": true, "component": "shared.team-member" }
-}
+  "collectionName": "components_blocks_abouts",
+  "info": {
+    "displayName": "about"
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "blocks"
+    },
+    "stats": {
+      "type": "component",
+      "component": "shared.stat",
+      "repeatable": true
+    },
+    "features": {
+      "type": "component",
+      "component": "shared.bullet",
+      "repeatable": true
+    },
+    "teamMembers": {
+      "type": "component",
+      "component": "shared.team-member",
+      "repeatable": true
+    }
+  }
 }

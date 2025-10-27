@@ -6,7 +6,7 @@ export interface BlocksAbout extends Struct.ComponentSchema {
     displayName: 'about';
   };
   attributes: {
-    content: Schema.Attribute.RichText;
+    content: Schema.Attribute.Blocks;
     features: Schema.Attribute.Component<'shared.bullet', true>;
     stats: Schema.Attribute.Component<'shared.stat', true>;
     teamMembers: Schema.Attribute.Component<'shared.team-member', true>;
@@ -228,7 +228,7 @@ export interface BlocksMediaText extends Struct.ComponentSchema {
     media: Schema.Attribute.Media<'images' | 'videos'>;
     mediaPosition: Schema.Attribute.Enumeration<['left', 'right']> &
       Schema.Attribute.DefaultTo<'left'>;
-    richText: Schema.Attribute.RichText;
+    richText: Schema.Attribute.Blocks;
     title: Schema.Attribute.String;
   };
 }
@@ -349,7 +349,7 @@ export interface BlocksRichtextColumn extends Struct.ComponentSchema {
     icon: 'columns';
   };
   attributes: {
-    content: Schema.Attribute.RichText & Schema.Attribute.DefaultTo<''>;
+    content: Schema.Attribute.Blocks;
     width: Schema.Attribute.Enumeration<
       ['1/6', '1/4', '1/3', '1/2', '2/3', '3/4', '5/6', '1']
     > &
@@ -433,7 +433,7 @@ export interface BlocksText extends Struct.ComponentSchema {
     displayName: 'text';
   };
   attributes: {
-    body: Schema.Attribute.RichText;
+    body: Schema.Attribute.Blocks;
     title: Schema.Attribute.String;
   };
 }
@@ -776,7 +776,7 @@ export interface SharedRichText extends Struct.ComponentSchema {
     icon: 'align-justify';
   };
   attributes: {
-    body: Schema.Attribute.RichText;
+    body: Schema.Attribute.Blocks;
   };
 }
 
@@ -1160,7 +1160,7 @@ export interface SidebarRichtextTile extends Struct.ComponentSchema {
       ['default', 'muted', 'accent', 'contrast']
     > &
       Schema.Attribute.DefaultTo<'default'>;
-    body: Schema.Attribute.RichText;
+    body: Schema.Attribute.Blocks;
     buttons: Schema.Attribute.Component<'shared.button', true>;
     title: Schema.Attribute.String;
   };

@@ -3,6 +3,6 @@
 "info": { "displayName": "text" },
 "attributes": {
 "title": { "type": "string" },
-"body": { "type": "richtext" }
+"body": { "type": "blocks" }
 }
 }
