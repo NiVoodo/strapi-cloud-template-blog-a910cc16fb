@@ -60,10 +60,7 @@
         "blocks.button-group",
         "blocks.richtext-columns",
         "blocks.cta",
-        "blocks.media-text",
-        "blocks.rubin-product-slider",
-        "blocks.rubin-product-grid",
-        "blocks.rubin-katalog"
+        "blocks.media-text"
       ]
     }
   }
