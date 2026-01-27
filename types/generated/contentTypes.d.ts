@@ -835,6 +835,9 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.richtext-columns',
         'blocks.cta',
         'blocks.media-text',
+        'blocks.rubin-product-slider',
+        'blocks.rubin-product-grid',
+        'blocks.rubin-katalog',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;

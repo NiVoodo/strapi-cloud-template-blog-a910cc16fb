@@ -99,7 +99,8 @@
     },
     "structuredData": {
       "type": "json",
-      "required": false
+      "required": false,
+      "default": null
     },
     "shareImage": {
       "type": "media",
@@ -167,7 +168,8 @@
     },
     "extraMeta": {
       "type": "json",
-      "description": "Freiform-Metatags (Key/Value)"
+      "description": "Freiform-Metatags (Key/Value)",
+      "default": {}
     }
   }
 }

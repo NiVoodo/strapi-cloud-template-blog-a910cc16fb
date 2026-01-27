@@ -1,43 +1,70 @@
 {
-"kind": "collectionType",
-"collectionName": "pages",
-"info": { "singularName": "page", "pluralName": "pages", "displayName": "Page" },
-"options": { "draftAndPublish": true },
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "singularName": "page",
+    "pluralName": "pages",
+    "displayName": "Page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
   "attributes": {
-    "title": { "type": "string", "required": true },
-    "slug": { "type": "uid", "targetField": "title", "required": true },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
     "seoGoal": {
       "type": "text",
       "required": false
     },
-    "seo": { "type": "component", "repeatable": false, "component": "shared.seo" },
-    "hideLeftSidebar": { "type": "boolean", "default": false },
-    "hideRightSidebar": { "type": "boolean", "default": false },
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "hideLeftSidebar": {
+      "type": "boolean",
+      "default": false
+    },
+    "hideRightSidebar": {
+      "type": "boolean",
+      "default": false
+    },
     "blocks": {
       "type": "dynamiczone",
       "components": [
         "blocks.hero",
         "blocks.services",
-"blocks.about",
-"blocks.gallery",
-"blocks.contact",
-"blocks.image",
-"blocks.card-grid",
-"blocks.article-grid",
-"blocks.event-grid",
-"blocks.event-list",
-"blocks.news-list",
-"blocks.steps",
-"blocks.quote",
-"blocks.text",
-"blocks.pricing-table",
-"blocks.product-slider",
-"blocks.space",
-"blocks.button-group",
-"blocks.richtext-columns",
-"blocks.cta",
-"blocks.media-text"
-]
-}
-}
+        "blocks.about",
+        "blocks.gallery",
+        "blocks.contact",
+        "blocks.image",
+        "blocks.card-grid",
+        "blocks.article-grid",
+        "blocks.event-grid",
+        "blocks.event-list",
+        "blocks.news-list",
+        "blocks.steps",
+        "blocks.quote",
+        "blocks.text",
+        "blocks.pricing-table",
+        "blocks.product-slider",
+        "blocks.space",
+        "blocks.button-group",
+        "blocks.richtext-columns",
+        "blocks.cta",
+        "blocks.media-text",
+        "blocks.rubin-product-slider",
+        "blocks.rubin-product-grid",
+        "blocks.rubin-katalog"
+      ]
+    }
+  }
 }
