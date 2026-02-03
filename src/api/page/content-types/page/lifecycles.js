@@ -2,88 +2,74 @@
 
 /**
  * Lifecycle hooks for Page content-type
- * Triggers Next.js revalidation when pages are created, updated, or deleted
- *
- * IMPORTANT: Uses delayed fire-and-forget to avoid DB deadlock
- * (Strapi must finish its transaction before Next.js queries /api/pages/public)
+ * Triggers Vercel redeploy when pages are published or unpublished
+ * This regenerates known-slugs.json and sitemap at build time
  */
 
-const REVALIDATE_SECRET = process.env.REVALIDATE_SECRET || "";
-const REVALIDATION_DELAY_MS = 2000; // Wait 2s for Strapi transaction to complete
+const VERCEL_DEPLOY_HOOK = process.env.VERCEL_DEPLOY_HOOK || "";
 
-function getNextjsUrl() {
-  const isProduction =
-    process.env.NODE_ENV === "production" ||
-    process.env.STRAPI_CLOUD === "true" ||
-    !!process.env.DATABASE_URL;
+// Debounce: only trigger one deploy per 30 seconds
+let lastDeployTime = 0;
+const DEPLOY_DEBOUNCE_MS = 30000;
 
-  if (isProduction) {
-    return process.env.NEXTJS_URL_PROD || "https://next-tauringstudio.vercel.app";
-  }
-  return process.env.NEXTJS_URL_LOCAL || "http://localhost:3000";
-}
-
-// Fire-and-forget with delay - doesn't block Strapi
-function scheduleRevalidation(event, slug) {
-  const baseUrl = getNextjsUrl();
-  const url = `${baseUrl}/api/revalidate`;
-  const isLocal = baseUrl.includes("localhost");
-  const envLabel = isLocal ? "LOCAL" : "PROD";
-
-  if (!REVALIDATE_SECRET) {
-    console.warn(`⚠️ REVALIDATE_SECRET not set - skipping revalidation`);
+function triggerVercelDeploy(event, slug) {
+  if (!VERCEL_DEPLOY_HOOK) {
+    console.warn("⚠️ VERCEL_DEPLOY_HOOK not set - skipping deploy trigger");
     return;
   }
 
-  console.log(`🔄 [${envLabel}] [${event}] Scheduling revalidation in ${REVALIDATION_DELAY_MS}ms`);
+  const now = Date.now();
+  if (now - lastDeployTime < DEPLOY_DEBOUNCE_MS) {
+    console.log(`⏳ [${event}] Deploy debounced (last deploy ${Math.round((now - lastDeployTime) / 1000)}s ago)`);
+    return;
+  }
 
-  // Delay to let Strapi finish its DB transaction
-  setTimeout(async () => {
-    console.log(`🚀 [${envLabel}] [${event}] Sending revalidation request to ${url}`);
+  lastDeployTime = now;
 
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${REVALIDATE_SECRET}`,
-        },
-        body: JSON.stringify({
-          event,
-          slug,
-          path: slug ? `/${slug}` : undefined,
-          revalidateAll: false,
-        }),
-      });
+  console.log(`🚀 [${event}] Triggering Vercel redeploy for slug: ${slug || "(none)"}`);
 
-      if (response.ok) {
-        const result = await response.json();
-        console.log(`✅ [${envLabel}] [${event}] Revalidation successful`);
-        if (result.knownSlugs?.slugs) {
-          console.log(`   → ${result.knownSlugs.slugs.length} slugs in whitelist`);
-        }
+  // Fire-and-forget - don't block Strapi
+  fetch(VERCEL_DEPLOY_HOOK, { method: "POST" })
+    .then((res) => {
+      if (res.ok) {
+        console.log(`✅ [${event}] Vercel deploy triggered successfully`);
       } else {
-        console.warn(`⚠️ [${envLabel}] [${event}] Revalidation failed: ${response.status}`);
+        console.warn(`⚠️ [${event}] Vercel deploy trigger failed: ${res.status}`);
       }
-    } catch (error) {
-      console.error(`❌ [${envLabel}] [${event}] Revalidation error:`, error.message);
-    }
-  }, REVALIDATION_DELAY_MS);
+    })
+    .catch((err) => {
+      console.error(`❌ [${event}] Vercel deploy trigger error:`, err.message);
+    });
 }
 
 module.exports = {
   afterCreate(event) {
     const { result } = event;
-    scheduleRevalidation("page.create", result?.slug);
+    // Only trigger if published (not draft)
+    if (result?.publishedAt) {
+      triggerVercelDeploy("page.publish", result?.slug);
+    }
   },
 
   afterUpdate(event) {
-    const { result } = event;
-    scheduleRevalidation("page.update", result?.slug);
+    const { result, params } = event;
+
+    // Check if this is a publish/unpublish action (not just a save)
+    // Strapi sets publishedAt when publishing and removes it when unpublishing
+    const wasPublished = params?.data?.publishedAt !== undefined;
+
+    if (wasPublished) {
+      const action = result?.publishedAt ? "page.publish" : "page.unpublish";
+      triggerVercelDeploy(action, result?.slug);
+    }
+    // Draft saves (no publishedAt change) are ignored
   },
 
   afterDelete(event) {
     const { result } = event;
-    scheduleRevalidation("page.delete", result?.slug);
+    // Only trigger if the deleted page was published
+    if (result?.publishedAt) {
+      triggerVercelDeploy("page.delete", result?.slug);
+    }
   },
 };
