@@ -12,6 +12,9 @@ const VERCEL_DEPLOY_HOOK = process.env.VERCEL_DEPLOY_HOOK || "";
 let lastDeployTime = 0;
 const DEPLOY_DEBOUNCE_MS = 30000;
 
+// Delay before triggering deploy to ensure DB transaction is committed
+const DEPLOY_DELAY_MS = 30000;
+
 function triggerVercelDeploy(event, slug) {
   if (!VERCEL_DEPLOY_HOOK) {
     console.warn("⚠️ VERCEL_DEPLOY_HOOK not set - skipping deploy trigger");
@@ -26,20 +29,24 @@ function triggerVercelDeploy(event, slug) {
 
   lastDeployTime = now;
 
-  console.log(`🚀 [${event}] Triggering Vercel redeploy for slug: ${slug || "(none)"}`);
+  console.log(`🕐 [${event}] Scheduling Vercel redeploy in ${DEPLOY_DELAY_MS}ms for slug: ${slug || "(none)"}`);
 
-  // Fire-and-forget - don't block Strapi
-  fetch(VERCEL_DEPLOY_HOOK, { method: "POST" })
-    .then((res) => {
-      if (res.ok) {
-        console.log(`✅ [${event}] Vercel deploy triggered successfully`);
-      } else {
-        console.warn(`⚠️ [${event}] Vercel deploy trigger failed: ${res.status}`);
-      }
-    })
-    .catch((err) => {
-      console.error(`❌ [${event}] Vercel deploy trigger error:`, err.message);
-    });
+  // Delay to ensure DB transaction is fully committed before build fetches data
+  setTimeout(() => {
+    console.log(`🚀 [${event}] Triggering Vercel redeploy now`);
+
+    fetch(VERCEL_DEPLOY_HOOK, { method: "POST" })
+      .then((res) => {
+        if (res.ok) {
+          console.log(`✅ [${event}] Vercel deploy triggered successfully`);
+        } else {
+          console.warn(`⚠️ [${event}] Vercel deploy trigger failed: ${res.status}`);
+        }
+      })
+      .catch((err) => {
+        console.error(`❌ [${event}] Vercel deploy trigger error:`, err.message);
+      });
+  }, DEPLOY_DELAY_MS);
 }
 
 module.exports = {
