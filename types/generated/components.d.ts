@@ -375,140 +375,6 @@ export interface BlocksRichtextColumns extends Struct.ComponentSchema {
   };
 }
 
-export interface BlocksRubinKatalog extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_rubin_katalogs';
-  info: {
-    description: 'Vollst\u00E4ndiger Rubin-Produktkatalog mit Category Facets und erweiterten Filterm\u00F6glichkeiten.';
-    displayName: 'Rubin Katalog';
-    icon: 'book-open';
-  };
-  attributes: {
-    columns: Schema.Attribute.Enumeration<['2', '3', '4', '6']> &
-      Schema.Attribute.DefaultTo<'4'>;
-    defaultCategory: Schema.Attribute.String;
-    defaultSort: Schema.Attribute.Enumeration<
-      [
-        'relevance',
-        'price_asc',
-        'price_desc',
-        'name_asc',
-        'name_desc',
-        'newest',
-      ]
-    > &
-      Schema.Attribute.DefaultTo<'relevance'>;
-    description: Schema.Attribute.Text;
-    enableFilters: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    itemsPerPage: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          max: 100;
-          min: 6;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<24>;
-    showCategoryFacets: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<true>;
-    showPagination: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    showResultCount: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<true>;
-    showSearchBar: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    showSortOptions: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<true>;
-    spacing: Schema.Attribute.Enumeration<['sm', 'md', 'lg', 'xl']> &
-      Schema.Attribute.DefaultTo<'md'>;
-    subtitle: Schema.Attribute.String;
-    title: Schema.Attribute.String;
-  };
-}
-
-export interface BlocksRubinProductGrid extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_rubin_product_grids';
-  info: {
-    description: 'Zeigt Rubin-Trauringe in einem Grid-Layout an mit optionalem Kategorie-Filter.';
-    displayName: 'Rubin Product Grid';
-    icon: 'grip-horizontal';
-  };
-  attributes: {
-    button: Schema.Attribute.Component<'shared.button', true>;
-    categoryFilter: Schema.Attribute.String;
-    columns: Schema.Attribute.Enumeration<['2', '3', '4', '6']> &
-      Schema.Attribute.DefaultTo<'4'>;
-    description: Schema.Attribute.Text;
-    itemsPerPage: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          max: 50;
-          min: 1;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<12>;
-    maxItems: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          max: 50;
-          min: 1;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<12>;
-    showLoadMore: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    showPagination: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<false>;
-    spacing: Schema.Attribute.Enumeration<['sm', 'md', 'lg', 'xl']> &
-      Schema.Attribute.DefaultTo<'md'>;
-    subtitle: Schema.Attribute.String;
-    title: Schema.Attribute.String;
-  };
-}
-
-export interface BlocksRubinProductSlider extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_rubin_product_sliders';
-  info: {
-    description: 'Zeigt Rubin-Trauringe als Slider an mit optionalem Kategorie-Filter.';
-    displayName: 'Rubin Product Slider';
-    icon: 'gem';
-  };
-  attributes: {
-    autoplay: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    autoplayDelay: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          min: 1000;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<5000>;
-    button: Schema.Attribute.Component<'shared.button', true>;
-    categoryFilter: Schema.Attribute.String;
-    description: Schema.Attribute.Text;
-    maxItems: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          max: 20;
-          min: 1;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<10>;
-    showNavigation: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    showPagination: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    slidesPerView: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          max: 6;
-          min: 1;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<4>;
-    subtitle: Schema.Attribute.String;
-    title: Schema.Attribute.String;
-  };
-}
-
 export interface BlocksServices extends Struct.ComponentSchema {
   collectionName: 'components_blocks_services';
   info: {
@@ -960,7 +826,7 @@ export interface SharedSeo extends Struct.ComponentSchema {
       ]
     > &
       Schema.Attribute.DefaultTo<'webpage'>;
-    extraMeta: Schema.Attribute.JSON;
+    extraMeta: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<{}>;
     focusKeyword: Schema.Attribute.String;
     metaDescription: Schema.Attribute.Text &
       Schema.Attribute.Required &
@@ -1368,9 +1234,6 @@ declare module '@strapi/strapi' {
       'blocks.quote': BlocksQuote;
       'blocks.richtext-column': BlocksRichtextColumn;
       'blocks.richtext-columns': BlocksRichtextColumns;
-      'blocks.rubin-katalog': BlocksRubinKatalog;
-      'blocks.rubin-product-grid': BlocksRubinProductGrid;
-      'blocks.rubin-product-slider': BlocksRubinProductSlider;
       'blocks.services': BlocksServices;
       'blocks.space': BlocksSpace;
       'blocks.step-item': BlocksStepItem;
