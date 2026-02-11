@@ -195,12 +195,17 @@ export interface BlocksHero extends Struct.ComponentSchema {
     backgroundImage: Schema.Attribute.Media<'images'>;
     badge: Schema.Attribute.String;
     features: Schema.Attribute.Component<'shared.feature', true>;
+    overlayColor: Schema.Attribute.String;
     primaryButtonLink: Schema.Attribute.String;
     primaryButtonText: Schema.Attribute.String;
     secondaryButtonLink: Schema.Attribute.String;
     secondaryButtonText: Schema.Attribute.String;
     stats: Schema.Attribute.Component<'shared.stat', true>;
     subtitle: Schema.Attribute.Text;
+    textPosition: Schema.Attribute.Enumeration<
+      ['left-bottom', 'right-bottom']
+    > &
+      Schema.Attribute.DefaultTo<'left-bottom'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
